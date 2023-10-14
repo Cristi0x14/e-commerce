@@ -8,7 +8,7 @@ public class User {
 
     @Id
     private String userName;
-    private String userFirstName;
+        private String userFirstName;
     private String userLastName;
     private String userPassword;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
