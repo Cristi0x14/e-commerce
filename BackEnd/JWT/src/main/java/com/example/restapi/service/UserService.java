@@ -5,6 +5,7 @@ import com.example.restapi.dao.UserDao;
 import com.example.restapi.entity.Role;
 import com.example.restapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -18,6 +19,9 @@ public class UserService {
 
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void initRoleAndUser() {
@@ -34,7 +38,7 @@ public class UserService {
 
         User adminUser = new User();
         adminUser.setUserName("admin123");
-        adminUser.setUserPassword("admin@pass");
+        adminUser.setUserPassword(getEncodedPassword("admin@pass"));
         adminUser.setUserFirstName("admin");
         adminUser.setUserLastName("admin");
         Set<Role> adminRoles = new HashSet<>();
@@ -48,6 +52,12 @@ public class UserService {
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(role);
         user.setRole(userRoles);
+        user.setUserPassword(getEncodedPassword(user.getUserPassword()));
         return userDao.save(user);
+    }
+
+    public String getEncodedPassword(String password){
+        return passwordEncoder.encode(password);
+
     }
 }
