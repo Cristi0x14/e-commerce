@@ -1,25 +1,30 @@
-<div class="continaer mt-5">
-    <div class="card text-center" style="padding: 20px;">
-        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-            <input type="text"
-            ngModel
-            name="userName"
-            id="userName"
-            placeholder="Enter your username"
-            class="form-control mb-3 text-center"
-            >
+<div class="container">
+    <div class="left-side">
+        <img src="https://s3-alpha-sig.figma.com/img/2c01/ae8d/ce147d8554c2cda7530244569e9d8515?Expires=1699833600&Signature=GFj2X28Yw8Cl~sislMBJlwWsZr2E3aN74PSTENcOjBJp~cxlPzszRZwX6s3rZnH5XWIOA72~217kqPR781cjlhevVkGjWbSY-am6PWRsD65~ZrChEIO~Mm8v-ywRuTr7uJw-7zKolJyCSBe84CSqpzdQvycbmfGJ18mM5UeY-X73UHWVI5cmD5mCR8XMDu0xTtlv2cmvT9WhLkogKIaNvZ9JxzBW4dwaBQjzuehV8a37q1xWKUHezXekQ6ppVNvA74VW5zcpP~2GQUKrAZqS6eONOuawXEQislv6deeT6Io-6De2iPEF7xol3x6wJQ1tiQc9ILKq9Z2l-f2DrJB6UQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+            alt="Your Image">
+    </div>
+    <div class="text-left">
+        <h1>Log in</h1>
+        <p>Don’t have an accout yet? <a href="" style="color: var(--Green, #38CB89);">Sign up</a></p>
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="right-side">
 
-            <input type="password"
-            ngModel
-            name="userPassword"
-            id="userPassword"
-            placeholder="Enter your password"
-            class="form-control mb-3 text-center"
-            >
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Username</mat-label>
+                <input matInput ngModel name="userName" id="userName" placeholder="Username">
+            </mat-form-field>
 
-            <input type="submit"
-            value="Login"
-            class="btn btn-outline-primary form-control rounded-0 text-center">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Password</mat-label>
+                <input matInput ngModel name="userPassword" id="userPassword" placeholder="Password" type="password">
+            </mat-form-field>
+
+            <div class="options">
+                <mat-checkbox color="primary" class="example-margin">Remember me</mat-checkbox>
+                <a href="">Forgot password?</a>
+            </div>
+
+            <button type="submit" mat-raised-button color="primary" style="width: 100%;">Login</button>
+
         </form>
-</div>
+    </div>
 </div>

@@ -12,6 +12,14 @@ import { HeaderComponent } from './header/header.component';
 import { ForbidenComponent } from './forbiden/forbiden.component';
 import { HttpClientModule } from '@angular/common/http'  
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +31,8 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     ForbidenComponent,
     LoginComponent,
+    AddNewProductComponent,
+
     
   ],
   imports: [
@@ -30,7 +40,14 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
