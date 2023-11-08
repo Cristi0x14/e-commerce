@@ -25,7 +25,7 @@ export class AddNewProductComponent {
   addProduct(productForm: NgForm){
     this.productService.addProduct(this.product).subscribe(
       (response: Product) => {
-        console.log(response);
+        productForm.reset();
       },
       (error: HttpErrorResponse) => {
         console.log(error);
