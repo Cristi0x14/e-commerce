@@ -2,6 +2,8 @@ import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Product } from 'src/_model/product.model';
+import { ProductService } from '../_services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-new-product',
@@ -15,11 +17,19 @@ export class AddNewProductComponent {
     productDiscountedPrice: 0,
     productActualPrice: 0,
   }
-  constructor() {}
+  constructor(private productService: ProductService) {
+  }
   
   ngOnInit(): void{}
 
   addProduct(productForm: NgForm){
-    console.log(this.product);
+    this.productService.addProduct(this.product).subscribe(
+      (response: Product) => {
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+      );
   }
 }

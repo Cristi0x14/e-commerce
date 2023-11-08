@@ -20,6 +20,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
+import { ProductComponent } from './_services/product/product.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AddNewProductComponent } from './add-new-product/add-new-product.compon
     ForbidenComponent,
     LoginComponent,
     AddNewProductComponent,
+    ProductComponent,
 
     
   ],
