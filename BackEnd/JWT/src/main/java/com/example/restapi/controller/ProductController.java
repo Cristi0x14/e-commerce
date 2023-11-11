@@ -1,19 +1,47 @@
 package com.example.restapi.controller;
 
+import com.example.restapi.entity.ImageModel;
 import com.example.restapi.entity.Product;
 import com.example.restapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @PostMapping({"/product/add"})
-    public Product addProduct(@RequestBody Product product){
+    @PostMapping(value = {"/product/add"},consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Product addProduct(@RequestPart("product") Product product,
+                              @RequestPart("image_file") MultipartFile[] file){
+        try {
+            Set<ImageModel> images = uploadImage(file);
+            product.setProductImages(images);
+            return productService.addProduct(product);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
-        return productService.addProduct(product);
+    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+        Set<ImageModel> imageModels = new HashSet<>();
+        for (MultipartFile file : multipartFiles) {
+            ImageModel imageModel = new ImageModel(
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    file.getBytes()
+            );
+            imageModels.add(imageModel);
+        }
+        return imageModels;
     }
 }
