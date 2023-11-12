@@ -21,6 +21,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ProductComponent } from './_services/product/product.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ProductComponent } from './_services/product/product.component';
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

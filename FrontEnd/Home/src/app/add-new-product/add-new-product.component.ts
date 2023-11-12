@@ -71,4 +71,9 @@ export class AddNewProductComponent {
 
    }
   }
+
+  removeImages(i : number) {
+    this.product.productImages.splice(i, 1);
+  }
+
 }
