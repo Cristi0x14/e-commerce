@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import { Product } from 'src/_model/product.model';
 import { ProductService } from '../_services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FileHandle } from 'src/_model/file-handle.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-new-product',
@@ -16,14 +18,19 @@ export class AddNewProductComponent {
     productDescription: "",
     productDiscountedPrice: 0,
     productActualPrice: 0,
+    productImages: [],
   }
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService , private sanitizer : DomSanitizer) {
+    
   }
   
   ngOnInit(): void{}
 
   addProduct(productForm: NgForm){
-    this.productService.addProduct(this.product).subscribe(
+
+    const productFormData = this.prepareFormData(this.product);
+
+    this.productService.addProduct(productFormData).subscribe(
       (response: Product) => {
         productForm.reset();
       },
@@ -31,5 +38,37 @@ export class AddNewProductComponent {
         console.log(error);
       }
       );
+  }
+  
+  prepareFormData(product : Product) : FormData{ 
+    const formData = new FormData();
+
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(product)], {type : 'application/json'})
+    );
+
+    for(var i  = 0 ; i < product.productImages.length ; i++){
+      formData.append(
+        'image_file',
+        product.productImages[i].file,
+        product.productImages[i].file.name
+      );
+    }
+    return formData;
+  }
+
+  onFileSelected(event : any) {
+   if(event.target.files){
+    const file = event.target.files[0];
+
+    const fileHandle : FileHandle = {
+      file : file,
+      url : this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
+    }
+
+    this.product.productImages.push(fileHandle)
+
+   }
   }
 }
