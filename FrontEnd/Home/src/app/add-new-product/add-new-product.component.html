@@ -40,9 +40,17 @@
             </div>
             <div class="col-6">
                 <div>
-                    
+
+                    <div class="dropzone">
+
+                    </div>
+
+                    <input type="file" 
+                        multiple 
+                        value="select" 
+                        #selectFile
+                        (change)="onFileSelected($event)">
                 </div>
-                
                 <div class='mt-5'>
                     <div class="row">
                         <mat-grid-list cols="4" rowHeight="1:1">
@@ -55,13 +63,6 @@
                         </mat-grid-list>
                     </div>
                 </div>
-
-                <input type="file" 
-                multiple 
-                value="select" 
-                #selectFile
-                (change)="onFileSelected($event)"
-                >
             </div>
         </div>
 
