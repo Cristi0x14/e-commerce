@@ -76,4 +76,8 @@ export class AddNewProductComponent {
     this.product.productImages.splice(i, 1);
   }
 
+  fileDropped(fileHandle : FileHandle){
+    this.product.productImages.push(fileHandle);
+  }
+
 }

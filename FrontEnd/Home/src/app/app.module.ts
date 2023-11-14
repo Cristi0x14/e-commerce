@@ -10,7 +10,7 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { ForbidenComponent } from './forbiden/forbiden.component';
-import { HttpClientModule } from '@angular/common/http'  
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'  
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -21,7 +21,11 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ProductComponent } from './_services/product/product.component';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule} from '@angular/material/grid-list';
+import { DragDirective } from './drag.directive';
+import { authGuard } from './_auth/auth.guard';
+import { AuthInterceptor } from './_auth/auth.interceptor';
+import { UserService } from './_services/user.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     LoginComponent,
     AddNewProductComponent,
     ProductComponent,
+    DragDirective,
 
     
   ],
@@ -53,7 +58,15 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatCheckboxModule,
     MatGridListModule,
   ],
-  providers: [],
+  providers: [
+    authGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    },
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
