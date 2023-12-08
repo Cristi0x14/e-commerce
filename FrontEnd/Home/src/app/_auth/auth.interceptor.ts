@@ -1,5 +1,5 @@
 import {
-    HttpErrorResponse,
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.userAuthService.getToken();
 
     req = this.addToken(req, token);
-
+    
     return next.handle(req).pipe(
         catchError(
             (err:HttpErrorResponse) => {

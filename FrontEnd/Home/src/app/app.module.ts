@@ -26,6 +26,8 @@ import { DragDirective } from './drag.directive';
 import { authGuard } from './_auth/auth.guard';
 import { AuthInterceptor } from './_auth/auth.interceptor';
 import { UserService } from './_services/user.service';
+import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
+import { MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -40,8 +42,7 @@ import { UserService } from './_services/user.service';
     AddNewProductComponent,
     ProductComponent,
     DragDirective,
-
-    
+    ShowProductDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +58,7 @@ import { UserService } from './_services/user.service';
     MatRadioModule,
     MatCheckboxModule,
     MatGridListModule,
+    MatTableModule,
   ],
   providers: [
     authGuard,
