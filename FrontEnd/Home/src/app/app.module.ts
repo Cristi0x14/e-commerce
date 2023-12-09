@@ -28,7 +28,7 @@ import { AuthInterceptor } from './_auth/auth.interceptor';
 import { UserService } from './_services/user.service';
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { MatTableModule} from '@angular/material/table';
-
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +59,7 @@ import { MatTableModule} from '@angular/material/table';
     MatCheckboxModule,
     MatGridListModule,
     MatTableModule,
+    MatIconModule,
   ],
   providers: [
     authGuard,

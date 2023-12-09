@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ShowProductDetailsComponent implements OnInit {
   products: Product[] = [];
-  displayedColumns: string[] = ['Id', 'Name', 'Description', 'DiscountedPrice', 'ActualPrice'];
+  displayedColumns: string[] = ['Id', 'Name', 'Description', 'DiscountedPrice', 'ActualPrice','Edit','Delete'];
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
@@ -29,4 +29,16 @@ export class ShowProductDetailsComponent implements OnInit {
         }
       );
   }
+
+  deleteProduct(productId:number){
+    this.productService.deleteProduct(productId).subscribe(
+      (resp) => {
+        this.loadProducts();
+      },
+      (error : HttpErrorResponse) =>{
+        console.log(error);
+      }
+    );
+  }
+
 }

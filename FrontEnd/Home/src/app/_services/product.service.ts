@@ -27,4 +27,8 @@ export class ProductService {
         })
       );
   }
+
+  public deleteProduct(productId:number){
+    return this.httpClient.delete("http://localhost:8081/deleteProductDetails/"+productId);
+  }
 }
