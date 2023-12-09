@@ -1,5 +1,5 @@
 package com.example.restapi.service;
-
+import java.util.List;
 import com.example.restapi.dao.ProductDao;
 import com.example.restapi.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,5 +11,13 @@ public class ProductService {
     private ProductDao productDao;
     public Product addProduct(Product product) {
         return productDao.save(product);
+    }
+
+    public List<Product> getAllProducts(){
+        return (List<Product>) productDao.findAll();
+    }
+
+    public void deleteProductDetails(Integer productId){
+        productDao.deleteById(productId);
     }
 }

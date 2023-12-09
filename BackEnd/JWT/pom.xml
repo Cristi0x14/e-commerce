@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>RestAPI</artifactId>
+    <artifactId>JWT</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>RestAPI</name>
     <description>RestAPI</description>
