@@ -28,6 +28,10 @@ export class ProductService {
       );
   }
 
+  public getProductDetailsById(productId:number){
+    return this.httpClient.get<Product>("http://localhost:8081/getProductDetailsById/"+productId)
+  }
+
   public deleteProduct(productId:number){
     return this.httpClient.delete("http://localhost:8081/deleteProductDetails/"+productId);
   }

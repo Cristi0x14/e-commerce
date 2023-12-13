@@ -41,7 +41,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors().and() // Enable CORS
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/registerNewUser","/getAllProducts","/deleteProductDetails/{productId}").permitAll()
+                .antMatchers("/authenticate", "/registerNewUser","/getAllProducts","/deleteProductDetails/{productId}","/getProductDetailsById/{productId}")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

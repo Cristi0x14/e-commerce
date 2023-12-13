@@ -11,6 +11,7 @@ import {
 import { ShowProductDetailsImagesComponent } from '../show-product-details-images/show-product-details-images.component';
 import { ImageProcessingService } from '../image-processing.service';
 import { map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-product-details',
@@ -22,7 +23,8 @@ export class ShowProductDetailsComponent implements OnInit {
   displayedColumns: string[] = ['Id', 'Name', 'Description', 'DiscountedPrice', 'ActualPrice','Images','Edit','Delete'];
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog,
-    private imageProcessingService: ImageProcessingService) { }
+    private imageProcessingService: ImageProcessingService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loadProducts();
@@ -61,6 +63,10 @@ export class ShowProductDetailsComponent implements OnInit {
       },
       height:'500px', width:'800px'
     })
+  }
+
+  editProductDetails(productId :number){
+    this.router.navigate(['/addNewProduct',{productId:productId}]);
   }
 
 }
