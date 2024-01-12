@@ -20,7 +20,9 @@ import { Router } from '@angular/router';
 })
 export class ShowProductDetailsComponent implements OnInit {
   products: Product[] = [];
+
   displayedColumns: string[] = ['Id', 'Name', 'Description', 'DiscountedPrice', 'ActualPrice','Images','Edit','Delete'];
+  
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog,
     private imageProcessingService: ImageProcessingService,
@@ -33,7 +35,7 @@ export class ShowProductDetailsComponent implements OnInit {
   loadProducts() {
     this.productService.getAllProducts()
     .pipe(
-      map((x: Product[],i) => x.map((produdct: Product) => this.imageProcessingService.createImages(produdct)))
+      map((x: Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
     )
       .subscribe(
         (data: Product[]) => {
