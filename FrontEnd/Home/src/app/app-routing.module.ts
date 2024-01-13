@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'admin',component:AdminComponent,canActivate:[authGuard], data:{roles:['Admin']}},
   {path: 'user',component:UserComponent,canActivate:[authGuard], data:{roles:['User']}},
   {path: 'login',component:LoginComponent},
-  {path: 'forbiden',component:ForbidenComponent},
+  {path: 'forbidden',component:ForbidenComponent},
   {path: 'addNewProduct', component: AddNewProductComponent,canActivate:[authGuard], data:{roles:['Admin']},
   resolve:{
     product: ProductResolveService
