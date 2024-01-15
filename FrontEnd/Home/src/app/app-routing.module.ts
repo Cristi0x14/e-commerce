@@ -9,6 +9,7 @@ import { AddNewProductComponent } from './add-new-product/add-new-product.compon
 import { authGuard } from './_auth/auth.guard';
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { ProductResolveService } from './product-resolve.service';
+import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
 const routes: Routes = [
   {path: '',component:HomeComponent},
   {path: 'admin',component:AdminComponent,canActivate:[authGuard], data:{roles:['Admin']}},
@@ -21,6 +22,7 @@ const routes: Routes = [
   }
   },
   {path: 'showProductDetails', component: ShowProductDetailsComponent,canActivate:[authGuard], data:{roles:['Admin']}},
+  {path: 'productViewDetails', component: ProductViewDetailsComponent, resolve:{product : ProductResolveService}},
   
 ];
 

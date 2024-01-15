@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddNewProductComponent {
   product: Product = { 
+    productId : "",
     productName: "",
     productDescription: "",
     productDiscountedPrice: 0,

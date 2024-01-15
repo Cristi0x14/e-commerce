@@ -3,6 +3,7 @@ import { ProductService } from '../_services/product.service';
 import { Product } from 'src/_model/product.model';
 import { map } from 'rxjs';
 import { ImageProcessingService } from '../image-processing.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class HomeComponent {
 
   products : Product[]= [];
 
-  constructor(private productService: ProductService,private imageProcessingService: ImageProcessingService){
+  constructor(private productService: ProductService,private imageProcessingService: ImageProcessingService, private router : Router){
 
   }
   ngOnInit(): void {
@@ -33,5 +34,9 @@ export class HomeComponent {
           console.error('Error fetching products:', error);
         }
       );
+  }
+
+  public showProductDetails(productId:number){
+    this.router.navigate(['/productViewDetails/',{productId : productId}]);
   }
 }

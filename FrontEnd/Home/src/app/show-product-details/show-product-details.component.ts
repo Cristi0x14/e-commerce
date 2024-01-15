@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 export class ShowProductDetailsComponent implements OnInit {
   products: Product[] = [];
 
-  displayedColumns: string[] = ['Id', 'Name', 'Description', 'DiscountedPrice', 'ActualPrice','Images','Edit','Delete'];
+  displayedColumns: string[] = ['Id', 'Name', 'productdescription', 'DiscountedPrice', 'ActualPrice','Actions'];
   
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog,
