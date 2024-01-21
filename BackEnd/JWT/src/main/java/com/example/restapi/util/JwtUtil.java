@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Component
@@ -33,10 +32,10 @@ public class JwtUtil {
         return ( userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
     private boolean isTokenExpired(String token){
-       final Date expirationDate = getExiprationDateFromToken(token);
+       final Date expirationDate = getExpirationDateFromToken(token);
        return expirationDate.before(new Date());
     }
-    private Date getExiprationDateFromToken(String token){
+    private Date getExpirationDateFromToken(String token){
         return getClaimFromToken(token,Claims::getExpiration);
     }
 

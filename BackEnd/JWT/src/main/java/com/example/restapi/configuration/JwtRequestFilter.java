@@ -19,6 +19,7 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+    public static String CURRENT_USER = "";
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
@@ -29,10 +30,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         final String header=request.getHeader("Authorization");
         String jwtToken = null;
         String userName = null;
-        if(header != null && header.startsWith("Bearer ")){
+        if((header != null) && (header.startsWith("Bearer "))){
             jwtToken = header.substring(7);
             try {
                 userName = jwtUtil.getUserNameFromToken(jwtToken);
+                CURRENT_USER = userName;
 
             }catch (IllegalArgumentException e){
                 System.out.println("Unable to get JWT token");
