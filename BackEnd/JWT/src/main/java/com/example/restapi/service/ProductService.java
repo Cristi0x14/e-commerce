@@ -1,4 +1,5 @@
 package com.example.restapi.service;
+import java.util.ArrayList;
 import java.util.List;
 import com.example.restapi.dao.ProductDao;
 import com.example.restapi.entity.Product;
@@ -24,4 +25,18 @@ public class ProductService {
     public void deleteProductDetails(Integer productId){
         productDao.deleteById(productId);
     }
+
+    public List<Product> getProductDetails(boolean isSingleProductCheckout, Integer productId){
+        if(isSingleProductCheckout){
+            List<Product> list = new ArrayList<>();
+            Product product = productDao.findById(productId).get();
+            list.add(product);
+            return list;
+        }
+        else{
+
+        }
+        return new ArrayList<>();
+    }
+
 }

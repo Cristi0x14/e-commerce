@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Product } from 'src/_model/product.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { OrderDetails } from 'src/_model/order-details.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,13 @@ export class ProductService {
 
   public deleteProduct(productId:number){
     return this.httpClient.delete("http://localhost:8081/deleteProductDetails/"+productId);
+  }
+
+  public getProductDetails(isSingleProductCheckout : Boolean, productId: number){
+    return this.httpClient.get<Product[]>("http://localhost:8081/getProductDetails/"+isSingleProductCheckout+"/"+productId);
+  }
+  
+  public placeOrder(orderDetails: OrderDetails){
+    return this.httpClient.post("http://localhost:8081/placeOrder",orderDetails);
   }
 }
