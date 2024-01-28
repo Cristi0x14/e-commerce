@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class HomeComponent {
 
   products : Product[]= [];
+  pageNumber: number = 0;
+  showLoadButton = false;
 
   constructor(private productService: ProductService,private imageProcessingService: ImageProcessingService, private router : Router){
 
@@ -21,13 +23,19 @@ export class HomeComponent {
     this.getAllProduct();
   }
   public getAllProduct(){
-    this.productService.getAllProducts()
+    this.productService.getAllProducts(this.pageNumber)
     .pipe(
       map((x: Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
     )
       .subscribe(
         (data: Product[]) => {
-          this.products = data;
+          if(data.length == 10){
+            this.showLoadButton = true;
+          }
+          else{
+            this.showLoadButton = false;
+          }
+          data.forEach(p => this.products.push(p));
           console.log('Products:', this.products);
         },
         (error) => {
@@ -38,5 +46,10 @@ export class HomeComponent {
 
   public showProductDetails(productId:number){
     this.router.navigate(['/productViewDetails/',{productId : productId}]);
+  }
+
+  public loadMoreProduct(){
+    this.pageNumber = this.pageNumber + 1;
+    this.getAllProduct();
   }
 }
