@@ -52,4 +52,8 @@ export class UserService {
     }
     return isMatch;
   }
+
+  public register(registerData: Data){
+    return this.httpclient.post(this.PATH_OF_API + '/registerNewUser' , registerData);
+  }
 }

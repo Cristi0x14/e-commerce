@@ -36,12 +36,16 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin'])
         }
         else {
-          this.router.navigate(['/user'])
+          this.router.navigate(['/user']);
         }
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  registerUser(){
+    this.router.navigate(['/register']);
   }
 }
