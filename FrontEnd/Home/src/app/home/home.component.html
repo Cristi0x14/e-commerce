@@ -1,4 +1,13 @@
 <div class="contrainer mt-3">
+
+    <div class="search-bar text-center">
+        <mat-form-field appearance="outline" class="w-50">
+            <mat-label>Search any product</mat-label>
+            <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput name="searchKey" id="searchKey" placeholder="Search any product">
+        </mat-form-field>
+    </div>
+
+
     <div class="content">
         <mat-grid-list cols="4" rowHeight="3:4" gutterSize="10">
             <mat-grid-tile *ngFor="let p of products">

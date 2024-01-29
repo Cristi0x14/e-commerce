@@ -23,6 +23,7 @@ export class ShowProductDetailsComponent implements OnInit {
   pageNumber: number = 0;
   showTable = false;
   showLoadMoreProductButton = false;
+  searchKey: String = "";
 
   displayedColumns: string[] = ['Id', 'Name', 'productdescription', 'DiscountedPrice', 'ActualPrice','Actions'];
   
@@ -35,9 +36,9 @@ export class ShowProductDetailsComponent implements OnInit {
     this.loadProducts();
   }
 
-  loadProducts() {
+  loadProducts(searchKey: String ="") {
     this.showTable = false;
-    this.productService.getAllProducts(this.pageNumber)
+    this.productService.getAllProducts(this.pageNumber,searchKey)
     .pipe(
       map((x: Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
     )
@@ -85,5 +86,13 @@ export class ShowProductDetailsComponent implements OnInit {
   loadMoreProduct(){
     this.pageNumber = this.pageNumber + 1;
     this.loadProducts();
+  }
+
+  public searchByKeyword(searchKeyword : String){
+    //console.log(searchKeyword);
+    this.searchKey = searchKeyword;
+    this.pageNumber = 0;
+    this.products = [];
+    this.loadProducts(this.searchKey);
   }
 }

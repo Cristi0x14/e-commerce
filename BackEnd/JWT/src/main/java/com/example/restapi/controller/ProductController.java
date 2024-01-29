@@ -47,8 +47,10 @@ public class ProductController {
         return imageModels;
     }
     @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber){
-        return productService.getAllProducts(pageNumber);
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") String searchKey){
+        List<Product> result = productService.getAllProducts(pageNumber,searchKey);
+        //System.out.println("result.size() = " + result.size());
+        return result;
     }
 
 

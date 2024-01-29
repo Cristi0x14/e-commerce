@@ -15,15 +15,15 @@ export class HomeComponent {
   products : Product[]= [];
   pageNumber: number = 0;
   showLoadButton = false;
-
+  searchKey : String = "";
   constructor(private productService: ProductService,private imageProcessingService: ImageProcessingService, private router : Router){
 
   }
   ngOnInit(): void {
     this.getAllProduct();
   }
-  public getAllProduct(){
-    this.productService.getAllProducts(this.pageNumber)
+  public getAllProduct(searchKey : String = ""){
+    this.productService.getAllProducts(this.pageNumber,searchKey)
     .pipe(
       map((x: Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
     )
@@ -50,6 +50,14 @@ export class HomeComponent {
 
   public loadMoreProduct(){
     this.pageNumber = this.pageNumber + 1;
-    this.getAllProduct();
+    this.getAllProduct(this.searchKey);
+  }
+
+  public searchByKeyword(searchKeyword : String){
+    //console.log(searchKeyword);
+    this.searchKey = searchKeyword;
+    this.pageNumber = 0;
+    this.products = [];
+    this.getAllProduct(this.searchKey);
   }
 }
