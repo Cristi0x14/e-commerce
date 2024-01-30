@@ -1,6 +1,7 @@
 package com.example.restapi.service;
 
 import com.example.restapi.configuration.JwtRequestFilter;
+import com.example.restapi.dao.CartDao;
 import com.example.restapi.dao.OrderDetailDao;
 import com.example.restapi.dao.ProductDao;
 import com.example.restapi.dao.UserDao;
@@ -20,7 +21,9 @@ public class OrderDetailService {
     private OrderDetailDao orderDetailDao;
     @Autowired
     private UserDao userDao;
-    public void placeOrder(OrderInput orderInput){
+    @Autowired
+    private CartDao cartDao;
+    public void placeOrder(OrderInput orderInput, boolean isCartCheckout){
         List<OrderProductQuantity> productQuantityList = orderInput.getOrderProductQuantityList();
         String currentUser = JwtRequestFilter.CURRENT_USER;
         User user =  userDao.findById(currentUser).get();
@@ -36,6 +39,10 @@ public class OrderDetailService {
                     product,
                     user
             );
+            if(!isCartCheckout){
+                List<Cart> carts = cartDao.findByUser(user);
+                carts.stream().forEach(x -> cartDao.delete(x));
+            }
             orderDetailDao.save(orderDetail);
         }
     }

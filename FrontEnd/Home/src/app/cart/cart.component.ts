@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../_services/product.service';
 import { response } from 'express';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,7 @@ export class CartComponent {
   displayedColumns: string[] = ['Name', 'Description', 'Price', 'DiscountedPrice'];
   cartDetails : any = [];
 
-  constructor(private productService : ProductService){
+  constructor(private productService : ProductService, private router : Router){
 
   }
 
@@ -30,5 +31,23 @@ export class CartComponent {
         console.log(error);
       }
     )
+  }
+
+  checkout(){
+
+    this.router.navigate(['/buyProduct', {
+      isSingleProductCheckout: false,
+      id: 0
+    }]);
+
+    // this.productService.getProductDetails(false,0).subscribe(
+    //   (response) =>{
+    //     console.log(response);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // )
+    
   }
 }

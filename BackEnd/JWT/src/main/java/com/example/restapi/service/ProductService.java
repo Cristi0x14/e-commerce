@@ -1,8 +1,15 @@
 package com.example.restapi.service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.example.restapi.configuration.JwtRequestFilter;
+import com.example.restapi.dao.CartDao;
 import com.example.restapi.dao.ProductDao;
+import com.example.restapi.dao.UserDao;
+import com.example.restapi.entity.Cart;
 import com.example.restapi.entity.Product;
+import com.example.restapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +19,10 @@ import org.springframework.stereotype.Service;
 public class ProductService {
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private CartDao cartDao;
     public Product addProduct(Product product) {
         return productDao.save(product);
     }
@@ -36,16 +47,18 @@ public class ProductService {
     }
 
     public List<Product> getProductDetails(boolean isSingleProductCheckout, Integer productId){
-        if(isSingleProductCheckout){
+        if(isSingleProductCheckout && productId != 0){
             List<Product> list = new ArrayList<>();
             Product product = productDao.findById(productId).get();
             list.add(product);
             return list;
         }
         else{
-
+            String username = JwtRequestFilter.CURRENT_USER;
+            User user = userDao.findById(username).get();
+            List<Cart> cart = cartDao.findByUser(user);
+            return cart.stream().map(x -> x.getProduct()).collect(Collectors.toList());
         }
-        return new ArrayList<>();
     }
 
 }

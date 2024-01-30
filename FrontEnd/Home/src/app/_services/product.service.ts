@@ -41,8 +41,8 @@ export class ProductService {
     return this.httpClient.get<Product[]>("http://localhost:8081/getProductDetails/" + isSingleProductCheckout + "/" + productId);
   }
 
-  public placeOrder(orderDetails: OrderDetails) {
-    return this.httpClient.post("http://localhost:8081/placeOrder", orderDetails);
+  public placeOrder(orderDetails: OrderDetails, isCartCheckout : boolean) {
+    return this.httpClient.post("http://localhost:8081/placeOrder/"+isCartCheckout, orderDetails);
   }
   public addToCart(productId: number) {
     return this.httpClient.get("http://localhost:8081/addToCart/" + productId);

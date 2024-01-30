@@ -1,4 +1,7 @@
 <div class="container mt-5">
+  <div class="mb-3" align="right">
+    <button mat-raised-button color="primary" (click)="checkout()">Checkout</button>
+  </div>
     <table mat-table [dataSource]="cartDetails" class="mat-elevation-z8">
 
         <ng-container matColumnDef="Name">
