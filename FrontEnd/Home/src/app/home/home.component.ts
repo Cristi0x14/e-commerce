@@ -12,27 +12,27 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  products : Product[]= [];
+  products: Product[] = [];
   pageNumber: number = 0;
   showLoadButton = false;
-  searchKey : String = "";
-  constructor(private productService: ProductService,private imageProcessingService: ImageProcessingService, private router : Router){
+  searchKey: String = "";
+  constructor(private productService: ProductService, private imageProcessingService: ImageProcessingService, private router: Router) {
 
   }
   ngOnInit(): void {
     this.getAllProduct();
   }
-  public getAllProduct(searchKey : String = ""){
-    this.productService.getAllProducts(this.pageNumber,searchKey)
-    .pipe(
-      map((x: Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
-    )
+  public getAllProduct(searchKey: String = "") {
+    this.productService.getAllProducts(this.pageNumber, searchKey)
+      .pipe(
+        map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
+      )
       .subscribe(
         (data: Product[]) => {
-          if(data.length == 10){
+          if (data.length == 10) {
             this.showLoadButton = true;
           }
-          else{
+          else {
             this.showLoadButton = false;
           }
           data.forEach(p => this.products.push(p));
@@ -44,16 +44,16 @@ export class HomeComponent {
       );
   }
 
-  public showProductDetails(productId:number){
-    this.router.navigate(['/productViewDetails/',{productId : productId}]);
+  public showProductDetails(productId: number) {
+    this.router.navigate(['/productViewDetails/', { productId: productId }]);
   }
 
-  public loadMoreProduct(){
+  public loadMoreProduct() {
     this.pageNumber = this.pageNumber + 1;
     this.getAllProduct(this.searchKey);
   }
 
-  public searchByKeyword(searchKeyword : String){
+  public searchByKeyword(searchKeyword: String) {
     //console.log(searchKeyword);
     this.searchKey = searchKeyword;
     this.pageNumber = 0;

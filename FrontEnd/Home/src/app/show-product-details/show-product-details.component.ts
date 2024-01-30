@@ -25,8 +25,8 @@ export class ShowProductDetailsComponent implements OnInit {
   showLoadMoreProductButton = false;
   searchKey: String = "";
 
-  displayedColumns: string[] = ['Id', 'Name', 'productdescription', 'DiscountedPrice', 'ActualPrice','Actions'];
-  
+  displayedColumns: string[] = ['Id', 'Name', 'productdescription', 'DiscountedPrice', 'ActualPrice', 'Actions'];
+
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog,
     private imageProcessingService: ImageProcessingService,
@@ -36,20 +36,20 @@ export class ShowProductDetailsComponent implements OnInit {
     this.loadProducts();
   }
 
-  loadProducts(searchKey: String ="") {
+  loadProducts(searchKey: String = "") {
     this.showTable = false;
-    this.productService.getAllProducts(this.pageNumber,searchKey)
-    .pipe(
-      map((x: Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
-    )
+    this.productService.getAllProducts(this.pageNumber, searchKey)
+      .pipe(
+        map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
+      )
       .subscribe(
         (data: Product[]) => {
           data.forEach(p => this.products.push(p));
           this.showTable = true;
-          if(data.length == 10){
+          if (data.length == 10) {
             this.showLoadMoreProductButton = true;
           }
-          else{
+          else {
             this.showLoadMoreProductButton = false;
           }
           console.log('Products:', this.products);
@@ -60,35 +60,35 @@ export class ShowProductDetailsComponent implements OnInit {
       );
   }
 
-  deleteProduct(productId:number){
+  deleteProduct(productId: number) {
     this.productService.deleteProduct(productId).subscribe(
       (resp) => {
         this.loadProducts();
       },
-      (error : HttpErrorResponse) =>{
+      (error: HttpErrorResponse) => {
         console.log(error);
       }
     );
   }
-  showImages(product:Product){
+  showImages(product: Product) {
     this.imagesDialog.open(ShowProductDetailsImagesComponent, {
-      data:{
-        images : product.productImages
+      data: {
+        images: product.productImages
       },
-      height:'500px', width:'800px'
+      height: '500px', width: '800px'
     })
   }
 
-  editProductDetails(productId :number){
-    this.router.navigate(['/addNewProduct',{productId:productId}]);
+  editProductDetails(productId: number) {
+    this.router.navigate(['/addNewProduct', { productId: productId }]);
   }
 
-  loadMoreProduct(){
+  loadMoreProduct() {
     this.pageNumber = this.pageNumber + 1;
     this.loadProducts();
   }
 
-  public searchByKeyword(searchKeyword : String){
+  public searchByKeyword(searchKeyword: String) {
     //console.log(searchKeyword);
     this.searchKey = searchKeyword;
     this.pageNumber = 0;

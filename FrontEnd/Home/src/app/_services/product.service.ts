@@ -20,8 +20,8 @@ export class ProductService {
       );
   }
 
-  public getAllProducts(pageNumber:number,searchKeyword : String): Observable<Product[]> {
-    return this.httpClient.get<Product[]>("http://localhost:8081/getAllProducts?pageNumber="+pageNumber+"&searchKey="+searchKeyword)
+  public getAllProducts(pageNumber: number, searchKeyword: String): Observable<Product[]> {
+    return this.httpClient.get<Product[]>("http://localhost:8081/getAllProducts?pageNumber=" + pageNumber + "&searchKey=" + searchKeyword)
       .pipe(
         catchError((error: any) => {
           return throwError(error);
@@ -29,19 +29,25 @@ export class ProductService {
       );
   }
 
-  public getProductDetailsById(productId:number){
-    return this.httpClient.get<Product>("http://localhost:8081/getProductDetailsById/"+productId)
+  public getProductDetailsById(productId: number) {
+    return this.httpClient.get<Product>("http://localhost:8081/getProductDetailsById/" + productId)
   }
 
-  public deleteProduct(productId:number){
-    return this.httpClient.delete("http://localhost:8081/deleteProductDetails/"+productId);
+  public deleteProduct(productId: number) {
+    return this.httpClient.delete("http://localhost:8081/deleteProductDetails/" + productId);
   }
 
-  public getProductDetails(isSingleProductCheckout : Boolean, productId: number){
-    return this.httpClient.get<Product[]>("http://localhost:8081/getProductDetails/"+isSingleProductCheckout+"/"+productId);
+  public getProductDetails(isSingleProductCheckout: Boolean, productId: number) {
+    return this.httpClient.get<Product[]>("http://localhost:8081/getProductDetails/" + isSingleProductCheckout + "/" + productId);
   }
-  
-  public placeOrder(orderDetails: OrderDetails){
-    return this.httpClient.post("http://localhost:8081/placeOrder",orderDetails);
+
+  public placeOrder(orderDetails: OrderDetails) {
+    return this.httpClient.post("http://localhost:8081/placeOrder", orderDetails);
+  }
+  public addToCart(productId: number) {
+    return this.httpClient.get("http://localhost:8081/addToCart/" + productId);
+  }
+  public getCartDetails(){
+    return this.httpClient.get("http://localhost:8081/getCartDetails");
   }
 }

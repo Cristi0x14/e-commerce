@@ -5,8 +5,14 @@
     flex-direction: column;
     width: 456px;
     margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-top: 10px;
 }
+
+img {
+    width: 70%;
+    height: auto;
+    border-radius: 15%;
+  }
 
 .left-side {
     display: flex;
