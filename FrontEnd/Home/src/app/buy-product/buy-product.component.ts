@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetails } from 'src/_model/order-details.model';
@@ -15,6 +15,7 @@ export class BuyProductComponent {
 
   productDetails: Product[] = [];
   isSingleProductCheckout : any = '';
+
 
   ngOnInit() : void {
     this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
@@ -83,4 +84,5 @@ export class BuyProductComponent {
     );
     return grandTotal;
   }
+  
 }

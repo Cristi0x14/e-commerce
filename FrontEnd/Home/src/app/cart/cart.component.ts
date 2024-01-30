@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CartComponent {
 
-  displayedColumns: string[] = ['Name', 'Description', 'Price', 'DiscountedPrice'];
+  displayedColumns: string[] = ['Name', 'Description', 'Price', 'DiscountedPrice','Action'];
   cartDetails : any = [];
 
   constructor(private productService : ProductService, private router : Router){
@@ -39,15 +39,18 @@ export class CartComponent {
       isSingleProductCheckout: false,
       id: 0
     }]);
+  }
 
-    // this.productService.getProductDetails(false,0).subscribe(
-    //   (response) =>{
-    //     console.log(response);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // )
-    
+  delete(cartId: any){
+    console.log(cartId)
+    this.productService.deleteCartItem(cartId).subscribe(
+      (response) =>{
+        console.log(response);
+        this.getCartDetails();
+      },
+      (error) =>{
+        console.log(error);
+      }
+    );
   }
 }

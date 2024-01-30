@@ -4,10 +4,7 @@ import com.example.restapi.entity.Cart;
 import com.example.restapi.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,13 @@ public class CartController {
     @GetMapping({"/getCartDetails"})
     public List<Cart> getCartDetails(){
         return cartService.getCartDetails();
+
     }
+    @PreAuthorize("hasRole('User')")
+    @DeleteMapping({"/deleteCartItem/{cartId}"})
+    public void deleteCartItem(@PathVariable(name = "cartId") Integer cartId){
+        cartService.deleteById(cartId);
+    }
+
+
 }

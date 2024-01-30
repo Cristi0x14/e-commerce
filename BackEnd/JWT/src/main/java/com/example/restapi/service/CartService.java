@@ -37,4 +37,7 @@ public class CartService {
         User user = userDao.findById(currentUser).get();
         return cartDao.findByUser(user);
     }
+    public void deleteById(Integer cartId){
+        cartDao.deleteById(cartId);
+    }
 }
