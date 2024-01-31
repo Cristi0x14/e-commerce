@@ -4,6 +4,7 @@ import { Product } from 'src/_model/product.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { OrderDetails } from 'src/_model/order-details.model';
+import { MyOrderDetails } from 'src/_model/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,14 @@ export class ProductService {
   }
   public deleteCartItem(cartId: Number){
     return this.httpClient.delete("http://localhost:8081/deleteCartItem/"+cartId);
-
+  }
+  public getMyOrders() : Observable <MyOrderDetails[]> {
+    return this.httpClient.get<MyOrderDetails[]>("http://localhost:8081/getOrderDetails");
+  }
+  public getAllOrders() : Observable <MyOrderDetails[]> {
+    return this.httpClient.get<MyOrderDetails[]>("http://localhost:8081/getAllOrderDetails");
+  }
+  public markAsDelivered(orderId:number) {
+    return this.httpClient.get("http://localhost:8081/markOrderAsDelivered/"+orderId);
   }
 }

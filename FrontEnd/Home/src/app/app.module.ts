@@ -20,7 +20,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
-import { ProductComponent } from './_services/product/product.component';
 import { MatGridListModule} from '@angular/material/grid-list';
 import { DragDirective } from './drag.directive';
 import { authGuard } from './_auth/auth.guard';
@@ -36,6 +35,8 @@ import { BuyProductComponent } from './buy-product/buy-product.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AllOrdersComponent } from './all-orders/all-orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,6 @@ import { CartComponent } from './cart/cart.component';
     ForbidenComponent,
     LoginComponent,
     AddNewProductComponent,
-    ProductComponent,
     DragDirective,
     ShowProductDetailsComponent,
     ShowProductDetailsImagesComponent,
@@ -56,6 +56,8 @@ import { CartComponent } from './cart/cart.component';
     OrderConfirmationComponent,
     RegisterComponent,
     CartComponent,
+    MyOrdersComponent,
+    AllOrdersComponent,
   ],
   imports: [
     BrowserModule,

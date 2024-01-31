@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +44,26 @@ public class OrderDetailService {
                 List<Cart> carts = cartDao.findByUser(user);
                 carts.stream().forEach(x -> cartDao.delete(x));
             }
+            orderDetailDao.save(orderDetail);
+        }
+    }
+
+    public List<OrderDetail> getOrderDetails(){
+        String currentUser = JwtRequestFilter.CURRENT_USER;
+        User user =  userDao.findById(currentUser).get();
+        return orderDetailDao.findByUser(user);
+    }
+
+    public List<OrderDetail> getAllOrderDetails(){
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        orderDetailDao.findAll().forEach(x -> orderDetails.add(x));
+        return orderDetails;
+    }
+
+    public void markOrderAsDelivered( Integer orderId){
+        OrderDetail orderDetail = orderDetailDao.findById(orderId).get();
+        if(orderDetail != null){
+            orderDetail.setOrderStatus("Delivered");
             orderDetailDao.save(orderDetail);
         }
     }

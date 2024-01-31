@@ -10,6 +10,8 @@ import com.example.restapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class CartService {
     @Autowired
@@ -25,6 +27,14 @@ public class CartService {
         if(currentUser != null){
             user =  userDao.findById(currentUser).get();
         }
+
+        List<Cart> cartList = cartDao.findByUser(user);
+        List<Cart> filteredList = cartList.stream().filter(x -> x.getProduct().getProductId() == productId).collect(Collectors.toList());
+
+        if(filteredList.size()>0){
+            return null;
+        }
+
         if(product != null && user != null){
             Cart cart = new Cart(product,user);
             return cartDao.save(cart);

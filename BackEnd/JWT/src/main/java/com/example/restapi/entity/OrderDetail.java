@@ -17,7 +17,6 @@ public class OrderDetail {
     private Product product;
     @OneToOne
     private User user;
-
     public OrderDetail(String orderFullName, String orderFullAddress, String orderContactNumber, String orderAlternateContactNumber, String orderStatus, Double orderAmount, Product product, User user) {
         this.orderFullName = orderFullName;
         this.orderFullAddress = orderFullAddress;
