@@ -54,9 +54,16 @@ public class OrderDetailService {
         return orderDetailDao.findByUser(user);
     }
 
-    public List<OrderDetail> getAllOrderDetails(){
+    public List<OrderDetail> getAllOrderDetails(String status){
         List<OrderDetail> orderDetails = new ArrayList<>();
-        orderDetailDao.findAll().forEach(x -> orderDetails.add(x));
+        if(status.equals("All")){
+            orderDetailDao.findAll().forEach(x -> orderDetails.add(x));
+        }
+        else {
+            orderDetailDao.findByOrderStatus(status).forEach(
+                    x-> orderDetails.add(x)
+            );
+        }
         return orderDetails;
     }
 

@@ -5,17 +5,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetails } from 'src/_model/order-details.model';
 import { Product } from 'src/_model/product.model';
 import { ProductService } from '../_services/product.service';
+import { PaymentServiceService } from '../payment-service.service';
 
 @Component({
   selector: 'app-buy-product',
   templateUrl: './buy-product.component.html',
-  styleUrls: ['./buy-product.component.css']
+  styleUrls: ['./buy-product.component.css'],
 })
 export class BuyProductComponent {
 
   productDetails: Product[] = [];
   isSingleProductCheckout : any = '';
-
+  amount: number = 199;
 
   ngOnInit() : void {
     this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
@@ -25,11 +26,9 @@ export class BuyProductComponent {
         {productId: x.productId, quantity: 1}
       )
     );
-    console.log(this.productDetails);
-    console.log(this.orderDetails);
   }
 
-  constructor(private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
+  constructor(private paymentService : PaymentServiceService,private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
 
   }
 
@@ -46,7 +45,7 @@ export class BuyProductComponent {
       (resp) => {
         console.log(resp);
         orderForm.reset();
-        this.router.navigate(["/orderConfirm"]);
+        this.router.navigate(["/payment"]);
       },
       (err) =>{
         console.log(err);
@@ -82,7 +81,7 @@ export class BuyProductComponent {
         grandTotal = grandTotal + price * productQuantity.quantity;
       }
     );
+    this.paymentService.amountToPay=grandTotal;
     return grandTotal;
   }
-  
 }

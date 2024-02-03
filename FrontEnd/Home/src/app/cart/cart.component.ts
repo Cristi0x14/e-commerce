@@ -34,7 +34,6 @@ export class CartComponent {
   }
 
   checkout(){
-
     this.router.navigate(['/buyProduct', {
       isSingleProductCheckout: false,
       id: 0

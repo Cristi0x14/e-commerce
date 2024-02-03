@@ -57,8 +57,8 @@ export class ProductService {
   public getMyOrders() : Observable <MyOrderDetails[]> {
     return this.httpClient.get<MyOrderDetails[]>("http://localhost:8081/getOrderDetails");
   }
-  public getAllOrders() : Observable <MyOrderDetails[]> {
-    return this.httpClient.get<MyOrderDetails[]>("http://localhost:8081/getAllOrderDetails");
+  public getAllOrders(stauts: string) : Observable <MyOrderDetails[]> {
+    return this.httpClient.get<MyOrderDetails[]>("http://localhost:8081/getAllOrderDetails/"+stauts);
   }
   public markAsDelivered(orderId:number) {
     return this.httpClient.get("http://localhost:8081/markOrderAsDelivered/"+orderId);

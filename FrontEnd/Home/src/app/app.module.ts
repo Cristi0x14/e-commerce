@@ -37,6 +37,9 @@ import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { PaymentComponent } from './payment/payment.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +61,7 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
     CartComponent,
     MyOrdersComponent,
     AllOrdersComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
     MatGridListModule,
     MatTableModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonToggleModule
   ],
   providers: [
     authGuard,

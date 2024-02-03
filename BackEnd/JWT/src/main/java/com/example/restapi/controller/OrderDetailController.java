@@ -26,9 +26,9 @@ public class OrderDetailController {
         return orderDetailService.getOrderDetails();
     }
     @PreAuthorize("hasRole('Admin')")
-    @GetMapping({"/getAllOrderDetails"})
-    public List<OrderDetail> getAllOrderDetails(){
-        return orderDetailService.getAllOrderDetails();
+    @GetMapping({"/getAllOrderDetails/{status}"})
+    public List<OrderDetail> getAllOrderDetails(@PathVariable(name = "status") String stauts){
+        return orderDetailService.getAllOrderDetails(stauts);
     }
 
     @PreAuthorize("hasRole('Admin')")

@@ -11,14 +11,17 @@ import { MyOrderDetails } from 'src/_model/order.model';
 export class AllOrdersComponent {
   displayedColumns: string[] = ['Id','User Name', 'Name', 'Product', 'Address','Contact No.','Status','Action'];
   dataSource : MyOrderDetails[] =[];
+
+  status : string = "All"
+
   constructor(private productService : ProductService){}
 
   ngOnInit():void{
-    this.getAllOrders();
+    this.getAllOrders(this.status);
   }
 
-  getAllOrders(){
-    this.productService.getAllOrders().subscribe(
+  getAllOrders(statusParam:string){
+    this.productService.getAllOrders(statusParam).subscribe(
       (response :MyOrderDetails[]) => {
         console.log(response);
         this.dataSource=response;
@@ -33,7 +36,7 @@ export class AllOrdersComponent {
     this.productService.markAsDelivered(orderId).subscribe(
       (response) =>{
         console.log(response);
-        this.getAllOrders();
+        this.getAllOrders(this.status);
       },
       (error) =>{
         console.log(error);
