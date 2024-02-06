@@ -1,22 +1,95 @@
+mat-grid-list{
+    position: relative; /* Ensure position is set to allow z-index */
+    z-index: 1; /* Adjust z-index as needed */
+  }
+
 mat-grid-tile{
     border: 1px solid lightgrey;
     border-radius: 5px;
 }
 .content{
     margin: 10px;
+    padding: 3px;
 }
-.home-page-product-image{
-    max-width: 90%;
-    max-height: 90%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+.search-bar {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-.image-wrapper {
-    position: relative;
-    height: 400px;
+mat-form-field {
+    width: 75%;
+}
+
+.mat-grid-tile {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: whitesmoke;
   }
+  .mat-grid-tile:hover {
+    transform: scale(1.05);
+  }
+  
+.image-wrapper {
+    text-align: center; /* Center the image within the image-wrapper */
+}
+
+.home-page-product-image {
+    width: 100%;
+    height: auto;
+}
+
+.discount{
+    background-color: rgba(255, 0, 0, 0.688);
+    padding: 3px;
+    border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+    .image-wrapper .home-page-product-image {
+        max-width: 80%;
+        height: auto;
+    }
+    .Text .Price b {
+        font-size: 10px; /* Adjust the font size for smaller screens */
+    }
+    .Text .Title b {
+        font-size: 10px; /* Adjust the font size for smaller screens */
+        white-space: normal; /* Allow the text to wrap onto multiple lines */
+        word-wrap: break-word; /* Allow long words to break and wrap onto the next line */
+    }
+}
+
+@media (min-width:600px) {
+    .image-wrapper .home-page-product-image {
+        max-width: 70%;
+        height: auto;
+    }
+    .Text .Price b {
+        font-size: 12px; /* Adjust the font size for smaller screens */
+    }
+    .Text .Title b {
+        font-size: 12px; /* Adjust the font size for smaller screens */
+        white-space: normal; /* Allow the text to wrap onto multiple lines */
+        word-wrap: break-word; /* Allow long words to break and wrap onto the next line */
+    }
+}
+
+@media (min-width:1000px) {
+    .image-wrapper .home-page-product-image {
+        max-width: 80%;
+        height: auto;
+    }
+    .Text .Price b {
+        font-size: 14px; /* Adjust the font size for smaller screens */
+    }
+    .Text .Title b {
+        font-size: 14px; /* Adjust the font size for smaller screens */
+        white-space: normal; /* Allow the text to wrap onto multiple lines */
+        word-wrap: break-word; /* Allow long words to break and wrap onto the next line */
+    }
+}
+  
+  

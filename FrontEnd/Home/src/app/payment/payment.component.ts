@@ -23,7 +23,7 @@ export class PaymentComponent {
             purchase_units:[
               {
                 amount: {
-                  value:this.amount.toString(),
+                  value:this.amount.toFixed(2).toString(),
                   currency_code: 'USD'
                 }
               }

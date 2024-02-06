@@ -39,6 +39,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { PaymentComponent } from './payment/payment.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { PaymentComponent } from './payment/payment.component';
     MatTableModule,
     MatIconModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    FontAwesomeModule
   ],
   providers: [
     authGuard,

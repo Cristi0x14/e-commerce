@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ProductService } from '../_services/product.service';
 import { Product } from 'src/_model/product.model';
 import { map } from 'rxjs';
@@ -16,12 +16,35 @@ export class HomeComponent {
   pageNumber: number = 0;
   showLoadButton = false;
   searchKey: String = "";
+  breakpoint: any;
   constructor(private productService: ProductService, private imageProcessingService: ImageProcessingService, private router: Router) {
 
   }
   ngOnInit(): void {
     this.getAllProduct();
+    this.updateBreakpoint(window.innerWidth);
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.updateBreakpoint(event.target.innerWidth);
+  }
+
+  private updateBreakpoint(windowWidth: number): void {
+    if(windowWidth <=600){
+      this.breakpoint=2;
+    }
+    else if(windowWidth <= 1020){
+      this.breakpoint=3
+    }
+    else if( windowWidth <= 1440){
+      this.breakpoint=4;
+    }
+    else{
+      this.breakpoint=4;
+    }
+  }
+
   public getAllProduct(searchKey: String = "") {
     this.productService.getAllProducts(this.pageNumber, searchKey)
       .pipe(
@@ -59,5 +82,9 @@ export class HomeComponent {
     this.pageNumber = 0;
     this.products = [];
     this.getAllProduct(this.searchKey);
+  }
+
+  getDiscount(productActualPrice:number,productDiscountedPrice:number) {
+    return (((productActualPrice-productDiscountedPrice)/productActualPrice)*100).toFixed(0);
   }
 }
