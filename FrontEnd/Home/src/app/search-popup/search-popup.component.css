@@ -1,0 +1,59 @@
+.search-popup-dialog {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw; /* 100% width of the viewport */
+  height: 80vh; /* 80% height of the viewport */
+  margin-left: auto; /* Align to the right */
+  margin-right: auto; /* Align to the left */
+}
+
+
+  mat-grid-list{
+    position: relative; /* Ensure position is set to allow z-index */
+    z-index: 1; /* Adjust z-index as needed */
+  }
+
+mat-grid-tile{
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+.content{
+    margin: 10px;
+    padding: 3px;
+}
+.search-bar {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+mat-form-field {
+    width: 75%;
+}
+
+.mat-grid-tile {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: whitesmoke;
+  }
+  .mat-grid-tile:hover {
+    transform: scale(1.05);
+  }
+  
+.image-wrapper {
+    text-align: center; /* Center the image within the image-wrapper */
+}
+
+.home-page-product-image {
+    width: 80%;
+    height: auto;
+}
+
+.discount{
+    background-color: rgba(255, 0, 0, 0.688);
+    padding: 3px;
+    border-radius: 5px;
+}

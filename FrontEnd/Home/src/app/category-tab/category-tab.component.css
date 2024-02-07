@@ -1,0 +1,38 @@
+.sub-menu{
+    background: white;
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 250px;
+    z-index: 999;
+    background-color: #f7f7f7;
+  }
+  .sub-menu-wrap{
+
+
+  }
+
+.sub-menu-link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+    cursor: pointer;
+  }
+  
+  .sub-menu-link p{
+    width: 100%;
+  }
+  .sub-menu p{
+    font-size: 16px;
+  }
+  .sub-menu-link:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .sub-menu-link .menuIcon {
+    vertical-align: middle; /* Adjust the value as needed */
+  }

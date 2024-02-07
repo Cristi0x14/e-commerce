@@ -41,7 +41,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { PaymentComponent } from './payment/payment.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LogoComponent } from './logo/logo.component';
-
+import { SearchPopupComponent } from './search-popup/search-popup.component';
+import { CategoryTabComponent } from './category-tab/category-tab.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +67,8 @@ import { LogoComponent } from './logo/logo.component';
     AllOrdersComponent,
     PaymentComponent,
     LogoComponent,
+    SearchPopupComponent,
+    CategoryTabComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +88,8 @@ import { LogoComponent } from './logo/logo.component';
     MatIconModule,
     MatDialogModule,
     MatButtonToggleModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatSidenavModule
   ],
   providers: [
     authGuard,

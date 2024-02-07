@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="header" color="primary">
 
   <div id="logo">
     <a routerLink="/" style="text-decoration: none; color: white;">
@@ -6,49 +6,71 @@
     </a>
   </div>
 
+  <div class="category">
+    <button mat-raised-button (click)="openCategoryDialog()" class="category-button">
+      <fa-icon [icon]="StoreIcon" style='font-size:24px'></fa-icon> &nbsp;
+      <span>Catalogue</span>
+    </button>
+  </div>
+
+
   <span class="space-buttons"></span>
 
-  <fa-icon [icon]="UserIcon" style='font-size:24px' (click)="toggleDropdown($event)" #userIcon></fa-icon>
-  &nbsp;&nbsp;&nbsp;
-  <fa-icon [icon]="CartIcon" style='font-size:24px' routerLink="/cart"></fa-icon> &nbsp;
-  
-  <div class="sub-menu-wrap" *ngIf="showDropdown && userIconClicked">
-    <div class="sub-menu">
-      <hr>
-      <a href="" class="sub-menu-link">
-        <p><fa-icon class="menuIcon" [icon]="UserIcon" style='font-size:24px'></fa-icon>&nbsp;
-          Edit Profile</p>
-        <span>></span>
-      </a>
-      <a class="sub-menu-link">
-        <p routerLink="/myOrders"><fa-icon class="menuIcon"[icon]="BoxIcon" style='font-size:24px'></fa-icon>&nbsp;
-          Placed Orders</p>
-        <span>></span>
-      </a>
-      <a href="" class="sub-menu-link">
-        <p><fa-icon class="menuIcon" [icon]="GearIcon" style='font-size:24px'></fa-icon>&nbsp;
-          Settings & Privacy</p>
-        <span>></span>
-      </a>
-      <a href="" class="sub-menu-link">
-        <p>&nbsp;&nbsp;<fa-icon class="menuIcon"[icon]="InfoIcon" style='font-size:24px'></fa-icon>&nbsp;
-          &nbsp;Help & Support</p>
-        <span>></span>
-      </a>
-      <a class="sub-menu-link">
-        <p (click)="logout()"><fa-icon class="menuIcon" [icon]="LogoutIcon"  style='font-size:24px' ></fa-icon>&nbsp;
-          Logout</p>
-        <span>></span>
-      </a>
-    </div>
+  <div class="search-bar">
+    <fa-icon [icon]="searchIcon" style='font-size:24px' routerLink="/"></fa-icon>&nbsp;
+    <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput name="searchKey" id="searchKey"
+      placeholder="Search any product" style="border-radius: 5px; width: 500px; text-align: center;">
   </div>
-  
+  <span class="space-buttons"></span>
+  <span class="space-buttons"></span>
+  <div class="actions">
+
+    <mat-toolbar *ngIf="isAdmin()" color="primary">
+      <button mat-raised-button color="primary" routerLink="/addNewProduct" *ngIf="isAdmin()">Add Products</button>
+      <button mat-raised-button color="primary" routerLink="/showProductDetails" *ngIf="isAdmin()">Show
+        ProductDetails</button>
+      <button mat-raised-button color="primary" routerLink="/allOrders" *ngIf="isAdmin()">All Orders</button>
+    </mat-toolbar>
+
+    <fa-icon [icon]="UserIcon" style='font-size:24px' (click)="toggleDropdown($event)" #userIcon></fa-icon>
+    &nbsp;&nbsp;&nbsp;
+    <fa-icon [icon]="CartIcon" style='font-size:24px' routerLink="/cart"></fa-icon> &nbsp;
+
+    <div class="sub-menu-wrap" *ngIf="showDropdown && userIconClicked">
+      <div class="sub-menu">
+        <hr>
+        <a href="" class="sub-menu-link">
+          <p><fa-icon class="menuIcon" [icon]="UserIcon" style='font-size:24px'></fa-icon>&nbsp;
+            Edit Profile</p>
+          <span>></span>
+        </a>
+        <hr>
+        <a class="sub-menu-link">
+          <p routerLink="/myOrders"><fa-icon class="menuIcon" [icon]="BoxIcon" style='font-size:24px'></fa-icon>&nbsp;
+            Placed Orders</p>
+          <span>></span>
+        </a>
+        <hr>
+        <a href="" class="sub-menu-link">
+          <p><fa-icon class="menuIcon" [icon]="GearIcon" style='font-size:24px'></fa-icon>&nbsp;
+            Settings & Privacy</p>
+          <span>></span>
+        </a>
+        <hr>
+        <a href="" class="sub-menu-link">
+          <p>&nbsp;&nbsp;<fa-icon class="menuIcon" [icon]="InfoIcon" style='font-size:24px'></fa-icon>&nbsp;
+            &nbsp;Help & Support</p>
+          <span>></span>
+        </a>
+        <hr>
+        <a class="sub-menu-link">
+          <p (click)="logout()"><fa-icon class="menuIcon" [icon]="LogoutIcon" style='font-size:24px'></fa-icon>&nbsp;
+            Logout</p>
+          <span>></span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
 </mat-toolbar>
-
-<mat-toolbar *ngIf="isAdmin()" color="primary">
-  <button mat-raised-button color="primary" routerLink="/addNewProduct" *ngIf="isAdmin()">Add Products</button>
-  <button mat-raised-button color="primary" routerLink="/showProductDetails" *ngIf="isAdmin()">Show ProductDetails</button>
-  <button mat-raised-button color="primary" routerLink="/allOrders" *ngIf="isAdmin()">All Orders</button>
-</mat-toolbar>
-
-

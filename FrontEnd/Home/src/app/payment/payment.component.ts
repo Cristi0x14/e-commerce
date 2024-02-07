@@ -12,10 +12,12 @@ export class PaymentComponent {
   
   constructor(private router : Router, private paymentService: PaymentServiceService,private ngZone: NgZone){}
 
-  amount : number = 0;
+  amountUSD : number = 0;
+  amountLei : number = 0;
 
   ngOnInit() : void {
-    this.amount=this.paymentService.amountToPay;
+    this.amountLei=this.paymentService.amountToPay;
+    this.amountUSD=this.amountLei*0.22;
     window.paypal.Buttons(
       {
         createOrder: (data:any,actions:any) =>{
@@ -23,7 +25,7 @@ export class PaymentComponent {
             purchase_units:[
               {
                 amount: {
-                  value:this.amount.toFixed(2).toString(),
+                  value:this.amountUSD.toFixed(2).toString(),
                   currency_code: 'USD'
                 }
               }

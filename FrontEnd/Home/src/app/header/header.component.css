@@ -147,3 +147,52 @@
 .sub-menu-link .menuIcon {
   vertical-align: middle; /* Adjust the value as needed */
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.search-field .input{
+  border-radius: 15px;
+}
+
+.category{
+  margin-left: 25px;
+}
+
+.category span {
+  font-size: 20px;
+}
+.category-button{
+  padding-top: 4px;
+  border-radius: 15px;
+}
+
+
+.example-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.custom-backdrop {
+  background-color: rgba(0, 0, 0, 0); /* Adjust the opacity as needed */
+}
