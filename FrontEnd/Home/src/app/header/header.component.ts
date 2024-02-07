@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { UserAuthService } from '../_services/user-auth.service';
 import { Router } from '@angular/router';
-import {faUserCircle,faShoppingCart,faSearch,faClose, faTimes,faGear,faInfo,faDoorOpen, faL} from "@fortawesome/free-solid-svg-icons";
+import {faUserCircle,faShoppingCart,faSearch,faClose, faTimes,faGear,faInfo,faDoorOpen, faBox, faB} from "@fortawesome/free-solid-svg-icons";
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ProductService } from '../_services/product.service';
 import { Product } from 'src/_model/product.model';
@@ -38,7 +38,12 @@ export class HeaderComponent implements OnInit{
   GearIcon=faGear;
   InfoIcon=faInfo;
   LogoutIcon=faDoorOpen;
+  BoxIcon=faBox;
 
+  showDropdown: boolean = false;
+  userIconClicked:boolean = false;
+  searchIcon = faSearch;
+  closeIcon = faTimes;
 
   products: Product[] = [];
   pageNumber: number = 0;
@@ -81,20 +86,12 @@ export class HeaderComponent implements OnInit{
     return this.userAuthService.isUser();
   }
 
-
-  showDropdown: boolean = false;
-  userIconClicked:boolean = false;
-  searchIcon = faSearch;
-  closeIcon = faTimes;
-
-  
   public showProductDetails(productId: number) {
     this.router.navigate(['/productViewDetails/', { productId: productId }]);
   }
 
   public searchByKeyword(searchKeyword: String) {
     if(searchKeyword!=""){
-    //console.log(searchKeyword);
     this.searchKey = searchKeyword;
     this.pageNumber = 0;
     this.products = [];
@@ -105,6 +102,11 @@ export class HeaderComponent implements OnInit{
     }
   }
   toggleDropdown(event: Event) {
+    if(!this.isLoggedIn()){
+      this.router.navigate(['login']);
+      this.showDropdown=false;
+      return;
+    }
     event.stopPropagation();
     this.showDropdown = !this.showDropdown;
     this.userIconClicked = !this.userIconClicked;
@@ -116,7 +118,6 @@ export class HeaderComponent implements OnInit{
   @HostListener('document:click', ['$event'])
   clickOut(event: any) {
     if(this.showDropdown){
-      console.log("clicked out boss");
       if (!this.elementRef.nativeElement.contains(event.target)) {
         this.showDropdown = false;
         this.userIconClicked = false;
@@ -124,4 +125,5 @@ export class HeaderComponent implements OnInit{
       this.toggleDropdown(event);
     }
   }
+
 }

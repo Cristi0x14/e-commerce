@@ -4,6 +4,12 @@
   .logo  {
     flex: 1;
   }
+  .logoImg {
+    width: 150px;
+    height: auto;
+    border-radius: 50px;
+
+}
   fa-icon{
     cursor: pointer;
   }
@@ -96,11 +102,6 @@
   padding: 10px;
 }
 
-.logo {
-  width: 150px; /* Adjust as needed */
-  height: auto; /* Adjust as needed */
-}
-
 .sub-menu{
   background: white;
   margin-top: 10px;
@@ -129,6 +130,7 @@
   text-decoration: none;
   color: #525252;
   margin: 12px 0;
+  cursor: pointer;
 }
 
 .sub-menu-link p{

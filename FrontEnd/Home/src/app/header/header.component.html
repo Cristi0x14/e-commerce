@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
 
-  <div id=“logo”>
-    <a routerLink="/" style="text-decoration: none; color: white;">All Sports</a>
+  <div id="logo">
+    <a routerLink="/" style="text-decoration: none; color: white;">
+      <img class="logoImg" src="assets/movement.jpg" alt="Logo">
+    </a>
   </div>
 
   <span class="space-buttons"></span>
@@ -9,14 +11,7 @@
   <fa-icon [icon]="UserIcon" style='font-size:24px' (click)="toggleDropdown($event)" #userIcon></fa-icon>
   &nbsp;&nbsp;&nbsp;
   <fa-icon [icon]="CartIcon" style='font-size:24px' routerLink="/cart"></fa-icon> &nbsp;
-
-</mat-toolbar>
-<mat-toolbar *ngIf="isLoggedIn()" color="primary">
-  <button mat-raised-button color="primary" routerLink="/addNewProduct" *ngIf="isAdmin()">Add Products</button>
-  <button mat-raised-button color="primary" routerLink="/showProductDetails" *ngIf="isAdmin()">Show ProductDetails</button>
-  <button mat-raised-button color="primary" routerLink="/myOrders" *ngIf="isUser()">My Orders</button>
-  <button mat-raised-button color="primary" routerLink="/allOrders" *ngIf="isAdmin()">All Orders</button>
-
+  
   <div class="sub-menu-wrap" *ngIf="showDropdown && userIconClicked">
     <div class="sub-menu">
       <hr>
@@ -24,7 +19,11 @@
         <p><fa-icon class="menuIcon" [icon]="UserIcon" style='font-size:24px'></fa-icon>&nbsp;
           Edit Profile</p>
         <span>></span>
-
+      </a>
+      <a class="sub-menu-link">
+        <p routerLink="/myOrders"><fa-icon class="menuIcon"[icon]="BoxIcon" style='font-size:24px'></fa-icon>&nbsp;
+          Placed Orders</p>
+        <span>></span>
       </a>
       <a href="" class="sub-menu-link">
         <p><fa-icon class="menuIcon" [icon]="GearIcon" style='font-size:24px'></fa-icon>&nbsp;
@@ -36,13 +35,20 @@
           &nbsp;Help & Support</p>
         <span>></span>
       </a>
-      <a href="" class="sub-menu-link">
+      <a class="sub-menu-link">
         <p (click)="logout()"><fa-icon class="menuIcon" [icon]="LogoutIcon"  style='font-size:24px' ></fa-icon>&nbsp;
           Logout</p>
         <span>></span>
       </a>
     </div>
   </div>
+  
+</mat-toolbar>
+
+<mat-toolbar *ngIf="isAdmin()" color="primary">
+  <button mat-raised-button color="primary" routerLink="/addNewProduct" *ngIf="isAdmin()">Add Products</button>
+  <button mat-raised-button color="primary" routerLink="/showProductDetails" *ngIf="isAdmin()">Show ProductDetails</button>
+  <button mat-raised-button color="primary" routerLink="/allOrders" *ngIf="isAdmin()">All Orders</button>
 </mat-toolbar>
 
 

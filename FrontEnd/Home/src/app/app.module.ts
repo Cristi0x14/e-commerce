@@ -40,6 +40,7 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { PaymentComponent } from './payment/payment.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LogoComponent } from './logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MyOrdersComponent,
     AllOrdersComponent,
     PaymentComponent,
+    LogoComponent,
   ],
   imports: [
     BrowserModule,
