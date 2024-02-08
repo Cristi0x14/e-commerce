@@ -3,7 +3,7 @@ import { ProductService } from '../_services/product.service';
 import { Product } from 'src/_model/product.model';
 import { map } from 'rxjs';
 import { ImageProcessingService } from '../image-processing.service';
-import { Router } from '@angular/router';
+import { Router , ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +15,23 @@ export class HomeComponent {
   products: Product[] = [];
   pageNumber: number = 0;
   showLoadButton = false;
-  searchKey: String = "";
+  category: String = "";
+  subcategory: String = "";
+  subsubcategory: String = "";
   breakpoint: any;
-  constructor(private productService: ProductService, private imageProcessingService: ImageProcessingService, private router: Router) {
 
-  }
+  constructor(private productService: ProductService, 
+    private imageProcessingService: ImageProcessingService, 
+    private router: Router,
+    private route: ActivatedRoute) {}
+
   ngOnInit(): void {
-    this.getAllProduct();
+    this.route.params.subscribe(params => {
+      this.category = params['category'] || '';
+      this.subcategory = params['subcategory'] || '';
+      this.subsubcategory = params['subsubcategory'] || '';
+      this.getAllProduct(this.category,this.subcategory,this.subsubcategory);
+    });
     this.updateBreakpoint(window.innerWidth);
   }
 
@@ -45,8 +55,8 @@ export class HomeComponent {
     }
   }
 
-  public getAllProduct(searchKey: String = "") {
-    this.productService.getAllProducts(this.pageNumber, searchKey)
+  public getAllProduct(category: String = "",subcategory: String = "",subsubcategory: String = "") {
+    this.productService.getAllProducts(this.pageNumber, category,subcategory,subsubcategory)
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )
@@ -73,15 +83,15 @@ export class HomeComponent {
 
   public loadMoreProduct() {
     this.pageNumber = this.pageNumber + 1;
-    this.getAllProduct(this.searchKey);
+    this.getAllProduct(this.category);
   }
 
   public searchByKeyword(searchKeyword: String) {
     //console.log(searchKeyword);
-    this.searchKey = searchKeyword;
+    this.category = searchKeyword;
     this.pageNumber = 0;
     this.products = [];
-    this.getAllProduct(this.searchKey);
+    this.getAllProduct(this.category);
   }
 
   getDiscount(productActualPrice:number,productDiscountedPrice:number) {

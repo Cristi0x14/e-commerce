@@ -3,12 +3,13 @@
   }
   .logo  {
     flex: 1;
+
   }
   .logoImg {
-    width: 150px;
-    height: auto;
-    border-radius: 50px;
-
+    width: auto;
+    height: 61px;
+    border-radius: 0px;   
+    border-right: solid 3px #2D3250;
 }
   fa-icon{
     cursor: pointer;
@@ -156,7 +157,11 @@
 
 .actions {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.actions fa-icon {
+  margin: 10px;
 }
 
 .search-field .input{
@@ -172,7 +177,7 @@
 }
 .category-button{
   padding-top: 4px;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
 
@@ -195,4 +200,9 @@
 
 .custom-backdrop {
   background-color: rgba(0, 0, 0, 0); /* Adjust the opacity as needed */
+}
+
+.admin-tools button{
+  border: solid 1px #2D3250;
+  margin: 5px;
 }

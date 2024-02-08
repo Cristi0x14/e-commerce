@@ -47,11 +47,15 @@ public class ProductController {
         return imageModels;
     }
     @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") String searchKey){
-        List<Product> result = productService.getAllProducts(pageNumber,searchKey);
-        //System.out.println("result.size() = " + result.size());
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") String searchKey1,@RequestParam(defaultValue = "") String searchKey2,@RequestParam(defaultValue = "") String searchKey3){
+        if(searchKey2.equals("")){
+            
+        }
+        List<Product> result = productService.getAllProducts(pageNumber,searchKey1,searchKey2,searchKey3);
         return result;
     }
+
+
 
 
     @GetMapping({"/getProductDetailsById/{productId}"})

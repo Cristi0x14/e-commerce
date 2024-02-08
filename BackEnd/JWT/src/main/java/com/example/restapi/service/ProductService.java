@@ -38,6 +38,28 @@ public class ProductService {
         }
     }
 
+    public List<Product> getAllProducts(int pageNumber, String searchKey1,String searchKey2){
+
+        Pageable pageable = PageRequest.of(pageNumber,10);
+        if(searchKey1.equals("") && (searchKey2.equals(""))){
+            return (List<Product>) productDao.findAll(pageable);
+        }
+        else{
+            return (List<Product>) productDao.findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(searchKey1,searchKey2,pageable);
+        }
+    }
+
+    public List<Product> getAllProducts(int pageNumber, String searchKey1,String searchKey2,String searchKey3){
+
+        Pageable pageable = PageRequest.of(pageNumber,10);
+        if(searchKey1.equals("") && (searchKey2.equals("")) && (searchKey3.equals(""))){
+            return (List<Product>) productDao.findAll(pageable);
+        }
+        else{
+            return (List<Product>) productDao.findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(searchKey1,searchKey2,searchKey3,pageable);
+        }
+    }
+
     public Product getProductDetailsById(Integer productId){
         return productDao.findById(productId).get();
     }

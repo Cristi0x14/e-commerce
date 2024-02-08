@@ -1,33 +1,17 @@
-<div class="sub-menu-wrap">
-    <div class="sub-menu">
-      <a  class="sub-menu-link">
-        <p>
-          Edit Profile</p>
-        <span>></span>
-      </a>
-      <hr>
-      <a class="sub-menu-link">
-        <p>
-          Placed Orders</p>
-        <span>></span>
-      </a>
-      <hr>
-      <a  class="sub-menu-link">
-        <p>
-          Settings & Privacy</p>
-        <span>></span>
-      </a>
-      <hr>
-      <a  class="sub-menu-link">
-        <p>
-          Help & Support</p>
-        <span>></span>
-      </a>
-      <hr>
-      <a class="sub-menu-link">
-        <p>
-          Logout</p>
-        <span>></span>
-      </a>
-    </div>
-  </div>
+<div class="sidebar">
+  <ul>
+    <li *ngFor="let category of categories">
+      <a (click)="toggleSubcategories(category)">{{ category.name }}</a>
+      <ul *ngIf="category.showSubcategories">
+        <li *ngFor="let category of category.subcategories">
+          <a (click)="toggleSubcategories(category)">{{ category.name }}</a>
+          <ul *ngIf="category.showSubcategories">
+            <li *ngFor="let category of category.subcategories">
+              <a routerLink="{{category.route}}">{{ category.name }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

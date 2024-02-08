@@ -64,7 +64,7 @@ export class SearchPopupComponent {
   }
 
   public getAllProduct(searchKey: String = "") {
-    this.productService.getAllProducts(this.pageNumber, searchKey)
+    this.productService.getAllProducts(this.pageNumber, searchKey,"","")
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )

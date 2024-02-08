@@ -38,7 +38,7 @@ export class ShowProductDetailsComponent implements OnInit {
 
   loadProducts(searchKey: String = "") {
     this.showTable = false;
-    this.productService.getAllProducts(this.pageNumber, searchKey)
+    this.productService.getAllProducts(this.pageNumber, searchKey,"","")
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )

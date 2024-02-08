@@ -13,4 +13,10 @@ public interface ProductDao extends CrudRepository<Product,Integer> {
     public List<Product> findByProductNameContainingIgnoreCaseOrProductDescriptionContainingIgnoreCase(
             String key1, String key2, Pageable pageable
     );
+    public List<Product> findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(
+            String key1, String key2, Pageable pageable
+    );
+    public List<Product> findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(
+            String key1, String key2,String key3, Pageable pageable
+    );
 }

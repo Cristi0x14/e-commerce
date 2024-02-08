@@ -19,8 +19,12 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentResolveService } from './payment-resolve.service';
+import { CategoryTabComponent } from './category-tab/category-tab.component';
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'allsports', component: HomeComponent },
+  { path: 'allsports/:category', component: HomeComponent },
+  { path: 'allsports/:category/:subcategory', component: HomeComponent },
+  { path: 'allsports/:category/:subcategory/:subsubcategory', component: HomeComponent },
   { path: 'admin', component: AdminComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
   { path: 'user', component: UserComponent, canActivate: [authGuard], data: { roles: ['User'] } },
   { path: 'login', component: LoginComponent },
@@ -44,7 +48,9 @@ const routes: Routes = [
   { path: "cart", component: CartComponent, canActivate: [authGuard], data: { roles: ['User'] } },
   { path: "myOrders", component: MyOrdersComponent, canActivate: [authGuard], data: { roles: ['User'] } },
   { path: 'allOrders', component: AllOrdersComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
-  { path: 'payment', component: PaymentComponent, canActivate: [authGuard], data: { roles: ['User'] } }
+  { path: 'payment', component: PaymentComponent, canActivate: [authGuard], data: { roles: ['User'] } },
+  { path: 'category', component: CategoryTabComponent },
+
 ];
 
 @NgModule({

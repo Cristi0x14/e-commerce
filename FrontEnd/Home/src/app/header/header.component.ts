@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { UserAuthService } from '../_services/user-auth.service';
 import { Router } from '@angular/router';
-import { faUserCircle, faShoppingCart, faSearch, faClose, faTimes, faGear, faInfo, faDoorOpen, faBox, faB,faStore } from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle, faShoppingCart, faSearch, faClose, faTimes, faGear, faInfo, faDoorOpen, faBox, faHeart, faStore, faRoad, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ProductService } from '../_services/product.service';
 import { Product } from 'src/_model/product.model';
@@ -12,8 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { CategoryTabComponent } from '../category-tab/category-tab.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -50,6 +50,9 @@ export class HeaderComponent implements OnInit {
   userIconClicked: boolean = false;
   searchIcon = faSearch;
   closeIcon = faTimes;
+  heartIcon = faHeart;
+  roadIcon= faRoad;
+  locationIcon= faLocationDot;
 
   products: Product[] = [];
   pageNumber: number = 0;
@@ -71,7 +74,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public getAllProduct(searchKey: String = "") {
-    this.productService.getAllProducts(this.pageNumber, searchKey)
+    this.productService.getAllProducts(this.pageNumber, searchKey,"","")
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )
@@ -109,13 +112,14 @@ export class HeaderComponent implements OnInit {
     if (!this.isLoggedIn()) {
       this.router.navigate(['login']);
       this.showDropdown = false;
-      return;
     }
-    event.stopPropagation();
-    this.showDropdown = !this.showDropdown;
-    this.userIconClicked = !this.userIconClicked;
-    if (!this.showDropdown) {
-      this.userIconClicked = false;
+    else {
+      event.stopPropagation();
+      this.showDropdown = !this.showDropdown;
+      this.userIconClicked = !this.userIconClicked;
+      if (!this.showDropdown) {
+        this.userIconClicked = false;
+      }
     }
   }
 
@@ -154,7 +158,7 @@ export class HeaderComponent implements OnInit {
 
   openCategoryDialog() {
     const dialogRef = this.dialog.open(CategoryTabComponent, {
-       // Set the width of the dialog
+      // Set the width of the dialog
       position: { left: '0' }, // Position the dialog to pop up from the right side
       hasBackdrop: true, // Enable the backdrop
       backdropClass: 'custom-backdrop' // Custom class for the backdrop without gray scale

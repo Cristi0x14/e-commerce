@@ -4,7 +4,7 @@ mat-grid-list{
   }
 
 mat-grid-tile{
-    border: 1px solid lightgrey;
+   /*( border: 1px solid lightgrey; */
     border-radius: 5px;
 }
 .content{
@@ -23,13 +23,14 @@ mat-form-field {
 .mat-grid-tile {
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    overflow: hidden;
-    background-color: whitesmoke;
+
   }
   .mat-grid-tile:hover {
     transform: scale(1.05);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: whitesmoke;
   }
   
 .image-wrapper {

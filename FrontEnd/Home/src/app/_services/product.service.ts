@@ -21,8 +21,8 @@ export class ProductService {
       );
   }
 
-  public getAllProducts(pageNumber: number, searchKeyword: String): Observable<Product[]> {
-    return this.httpClient.get<Product[]>("http://localhost:8081/getAllProducts?pageNumber=" + pageNumber + "&searchKey=" + searchKeyword)
+  public getAllProducts(pageNumber: number, searchKeyword1: String, searchKeyword2: String, searchKeyword3: String): Observable<Product[]> {
+    return this.httpClient.get<Product[]>("http://localhost:8081/getAllProducts?pageNumber=" + pageNumber + "&searchKey1=" + searchKeyword1+ "&searchKey2=" + searchKeyword2+ "&searchKey3=" + searchKeyword3)
       .pipe(
         catchError((error: any) => {
           return throwError(error);

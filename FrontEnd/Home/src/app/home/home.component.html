@@ -1,6 +1,6 @@
 <div class="contrainer mt-3">
     <div class="content p-3">
-        <div class="search-bar text-center">
+        <div class="search-bar text-center" *ngIf="false">
             <mat-form-field appearance="outline">
                 <mat-label>Search any product</mat-label>
                 <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput name="searchKey" id="searchKey" placeholder="Search any product">
