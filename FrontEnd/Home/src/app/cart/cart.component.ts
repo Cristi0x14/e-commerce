@@ -13,7 +13,7 @@ import { Product } from 'src/_model/product.model';
 })
 export class CartComponent {
 
-  displayedColumns: string[] = ['Name', 'Description', 'Price', 'DiscountedPrice','Action'];
+  displayedColumns: string[] = ['Name', 'Image','Description', 'Price', 'DiscountedPrice','Action'];
   cartProducts : any = [];
 
   constructor(private productService : ProductService, private router : Router,private imageProcessingService: ImageProcessingService){
