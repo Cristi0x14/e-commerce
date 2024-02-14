@@ -51,7 +51,7 @@ public class ProductService {
 
     public List<Product> getAllProducts(int pageNumber, String searchKey1,String searchKey2,String searchKey3){
 
-        Pageable pageable = PageRequest.of(pageNumber,10);
+        Pageable pageable = PageRequest.of(pageNumber,12);
         if(searchKey1.equals("") && (searchKey2.equals("")) && (searchKey3.equals(""))){
             return (List<Product>) productDao.findAll(pageable);
         }
@@ -60,6 +60,9 @@ public class ProductService {
         }
     }
 
+    public int getTotalPages(String searchKey1, String searchKey2, String searchKey3,Integer pageSize) {
+        return productDao.getTotalPages(searchKey1,searchKey2,searchKey3,pageSize);
+    }
     public Product getProductDetailsById(Integer productId){
         return productDao.findById(productId).get();
     }

@@ -49,14 +49,16 @@ public class ProductController {
     @GetMapping("/getAllProducts")
     public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "") String searchKey1,@RequestParam(defaultValue = "") String searchKey2,@RequestParam(defaultValue = "") String searchKey3){
         if(searchKey2.equals("")){
-            
+
         }
         List<Product> result = productService.getAllProducts(pageNumber,searchKey1,searchKey2,searchKey3);
         return result;
     }
 
-
-
+    @GetMapping("/getPageCount")
+    public Integer getPageCount(@RequestParam(defaultValue = "12") int pageSize,@RequestParam(defaultValue = "") String searchKey1,@RequestParam(defaultValue = "") String searchKey2,@RequestParam(defaultValue = "") String searchKey3){
+        return productService.getTotalPages(searchKey1,searchKey2,searchKey3,pageSize);
+    }
 
     @GetMapping({"/getProductDetailsById/{productId}"})
     public Product getProductDetailsById(@PathVariable("productId") Integer productId){

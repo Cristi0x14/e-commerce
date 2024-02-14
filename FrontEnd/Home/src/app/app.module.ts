@@ -44,6 +44,7 @@ import { LogoComponent } from './logo/logo.component';
 import { SearchPopupComponent } from './search-popup/search-popup.component';
 import { CategoryTabComponent } from './category-tab/category-tab.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { SubCategoryComponent } from './sub-category/sub-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     LogoComponent,
     SearchPopupComponent,
     CategoryTabComponent,
+    SubCategoryComponent,
   ],
   imports: [
     BrowserModule,

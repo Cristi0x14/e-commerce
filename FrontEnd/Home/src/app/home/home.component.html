@@ -1,43 +1,60 @@
+<div class="pagination">
+    <div class="container">
+        <div class="text">
+            <p>Page
+                <select id="numberSelect" [(ngModel)]="pageNumber" (change)="onSelectionChange($event)" style="border-radius: 8px;">
+                </select>
+                of {{pageCount}}
+            </p>
+        </div>
+        <div class="buttons">
+            <button mat-mini-fab color="primary" (click)="pageBack()" aria-label="Example icon button with a home icon">
+                <span>
+                    < </span>
+            </button>
+            <button mat-mini-fab color="primary" (click)="pageForward()"
+                aria-label="Example icon button with a home icon">
+                <span> > </span>
+            </button>
+        </div>
+    </div>
+</div>
 <div class="contrainer mt-3">
     <div class="content p-3">
-        <div class="search-bar text-center" *ngIf="false">
-            <mat-form-field appearance="outline">
-                <mat-label>Search any product</mat-label>
-                <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput name="searchKey" id="searchKey" placeholder="Search any product">
-            </mat-form-field>
-        </div>
         <div class="card-container">
             <mat-grid-list [cols]="breakpoint" rowHeight="7:8" gutterSize="20px">
                 <mat-grid-tile *ngFor="let p of products">
-                    <div class="row p-1" (click)="showProductDetails(p.productId)" style="cursor: pointer; text-align: center;">
+                    <div class="row p-1" (click)="showProductDetails(p.productId)"
+                        style="cursor: pointer; text-align: center;">
                         <div class="image-wrapper">
                             <img [src]="p.productImages[0].url" alt="" class="home-page-product-image">
                         </div>
                         <div class="Text">
                             <div class="Title mt-2">
-                                <b>{{p.productName}}&nbsp;<span class="discount">-{{getDiscount(p.productActualPrice,p.productDiscountedPrice)}}%</span></b>
+                                <b>{{p.productName}}&nbsp;<span
+                                        class="discount">-{{getDiscount(p.productActualPrice,p.productDiscountedPrice)}}%</span></b>
                                 <br>
                                 <span class="Price">
                                     <b style="color: red;">
-                                        {{p.productDiscountedPrice}} Lei
+                                        {{p.productDiscountedPrice}} $ USD
                                     </b>
                                     &nbsp;
                                     <b style="text-decoration: line-through; color: black;">
-                                        {{p.productActualPrice}} Lei
+                                        {{p.productActualPrice}} $ USD
                                     </b>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </mat-grid-tile>
-            </mat-grid-list>            
+            </mat-grid-list>
         </div>
-       
+
         <div class="text-center mt-5" style="padding-bottom: 50px;" *ngIf="showLoadButton">
-            <button type="button" mat-raised-button color="primary" (click)="loadMoreProduct()">Load More</button>
+            <button type="button" mat-raised-button color="primary" (click)="pageForward()">Load More</button>
         </div>
         <div class="mt-5">
-            
+
         </div>
     </div>
 </div>

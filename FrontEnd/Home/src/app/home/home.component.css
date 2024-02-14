@@ -92,5 +92,34 @@ mat-form-field {
         word-wrap: break-word; /* Allow long words to break and wrap onto the next line */
     }
 }
-  
-  
+
+.pagination span{
+    font-size: 25px;
+}
+.pagination .text p{
+    font-size: 25px;
+    margin-right: 10px;
+}
+.pagination.text{
+    margin-left: auto;
+    margin-right: 0;
+}
+.pagination {
+    width: 25%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.pagination .buttons{
+    margin-top: -8px;
+}
+.buttons button{
+    margin-left: 7px;
+    margin-right: 7px;
+}
+.pagination .container{
+    display: flex;
+    justify-content: flex-end;
+}

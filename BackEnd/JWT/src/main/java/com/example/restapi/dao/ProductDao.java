@@ -19,4 +19,14 @@ public interface ProductDao extends CrudRepository<Product,Integer> {
     public List<Product> findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(
             String key1, String key2,String key3, Pageable pageable
     );
+
+    long countByProductNameContainingIgnoreCaseOrProductNameContainingIgnoreCaseOrProductNameContainingIgnoreCase(
+            String key1, String key2,String key3
+    );
+
+    // Method to get the total number of pages
+    default int getTotalPages(String key1, String key2,String key3, Integer pageSize) {
+        long totalProducts = countByProductNameContainingIgnoreCaseOrProductNameContainingIgnoreCaseOrProductNameContainingIgnoreCase(key1, key2,key3);
+        return (int) Math.ceil((double) totalProducts / pageSize);
+    }
 }

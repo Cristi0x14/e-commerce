@@ -63,4 +63,14 @@ export class ProductService {
   public markAsDelivered(orderId:number) {
     return this.httpClient.get("http://localhost:8081/markOrderAsDelivered/"+orderId);
   }
+  getPageCount(pageSize: number = 0, category: string = "", subcategory: string = "", subsubcategory: string = ""): Observable<number> {
+    return this.httpClient.get<number>("http://localhost:8081/getPageCount", {
+      params: {
+        pageNumber: pageSize.toString(),
+        searchKey1: category,
+        searchKey2: subcategory,
+        searchKey3: subsubcategory
+      }
+    });
+  }
 }
