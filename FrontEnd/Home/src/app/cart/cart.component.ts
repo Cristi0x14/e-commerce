@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ProductService } from '../_services/product.service';
 import { response } from 'express';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { ImageProcessingService } from '../image-processing.service';
+import { Product } from 'src/_model/product.model';
 
 @Component({
   selector: 'app-cart',
@@ -11,28 +14,34 @@ import { Router } from '@angular/router';
 export class CartComponent {
 
   displayedColumns: string[] = ['Name', 'Description', 'Price', 'DiscountedPrice','Action'];
-  cartDetails : any = [];
+  cartProducts : any = [];
 
-  constructor(private productService : ProductService, private router : Router){
+  constructor(private productService : ProductService, private router : Router,private imageProcessingService: ImageProcessingService){
 
   }
 
   ngOnInit(){
-    this.getCartDetails();
+    this.getCartProducts();
   }
 
-  getCartDetails(){
-    this.productService.getCartDetails().subscribe(
-      (response) => {
-        console.log(response);
-        this.cartDetails = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+  getCartProducts(): void {
+    this.productService.getCartDetails()
+      .subscribe(
+        (response: any) => { 
+          console.log(response);
+          this.cartProducts = response.map((item: any) => {
+            return {
+              cardId: item.cardId,
+              product: this.imageProcessingService.createImages(item.product),
+              user: item.user
+            };
+          });
+        },
+        (error: any) => { 
+          console.log(error);
+        }
+      );
   }
-
   checkout(){
     this.router.navigate(['/buyProduct', {
       isSingleProductCheckout: false,
@@ -45,7 +54,7 @@ export class CartComponent {
     this.productService.deleteCartItem(cartId).subscribe(
       (response) =>{
         console.log(response);
-        this.getCartDetails();
+        this.getCartProducts();
       },
       (error) =>{
         console.log(error);
