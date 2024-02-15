@@ -1,15 +1,134 @@
-table{
-    width: 100%;
+.container {
+    width: 66%;
+    margin-bottom: 30px;
 }
-.mat-column-Description{
-    width: 35% !important;
-}
-table th,td {
-    padding: 10px;    
-    text-align: center !important;
+
+table th,
+td {
+    padding: 10px;
+    text-align: start !important;
     vertical-align: middle !important;
 }
 
-.mat-column-Description{
-    text-align: left !important;
+.details {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ProductCounterButton {
+    border: solid 1px lightgray;
+    border-radius: 20px;
+    font-size: 30px;
+    background-color: #f0f0f0;
+    margin-left: 10px;
+    color: rgb(127, 127, 127);
+}
+
+.UnitPrice{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.ActualPrice{
+    text-decoration: line-through;
+}
+.DiscountedPrice b{
+    color: red !important;
+}
+
+.Title{
+    display: flex;
+    flex-direction: column;
+}
+.Title mat-icon{
+    vertical-align: bottom;
+    cursor: pointer;
+    margin-right: 3px;
+}
+.Title a
+{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.details a{
+    font-size: 20px;
+    vertical-align: middle;
+    padding: 5px;
+}
+.ProductCounterButton{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.ProductCounterButton span{
+    cursor: pointer;
+}
+
+.Title b{
+    color: #3f51b5;
+}
+
+.region{
+    display: flex;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.summary{
+    width: 30%;
+    background-color: #3f51b5;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0px 0px 10px 0px #888888;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.horizontal-line {
+    height: 1px; 
+    background-color: white;
+  }
+.spacer{
+    flex-grow: 1;
+}
+.summary .text .value{
+    text-align: right;
+  }
+.summary .text{
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-container .horizontal-line {
+    height: 3px; 
+    background-color: white;
+  }
+
+  .checkOutButton{
+    height: 4rem;
+    width: 100%;
+    border-radius: 35px;
+    background-color: #2fec8e;
+  }
+  .checkOutButton span{
+    font-size: 16px;
+  }
+
+  .card{
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    height: 55vh;
+    padding: 20px;
+  }
+
+  .card .item{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .card .item .mat-icon {
+    font-size: 50px;
+    height: 50px ;
+    width: 50px;
 }

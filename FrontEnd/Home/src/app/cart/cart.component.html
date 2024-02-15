@@ -1,45 +1,128 @@
-<div class="container mt-5">
-  <div class="mb-3" align="right">
-    <button mat-raised-button color="primary" (click)="checkout()">Checkout</button>
-  </div>
+<div class="region">
+  <div class="container mt-5">
     <table mat-table [dataSource]="cartProducts" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="Name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.product.productName}} </td>
-        </ng-container>
+      <ng-container matColumnDef="Image">
+        <th mat-header-cell *matHeaderCellDef>
+          <h1><b style="margin-left: 10px;">Products</b></h1>
+        </th>
+        <td mat-cell *matCellDef="let element" style="display: flex;">
+          <img src={{element.product.productImages[0].url}} height="100px">
+          <div class="Title">
+            <b style="margin-left: 10px;">{{element.product.productName}}</b>
 
-        <ng-container matColumnDef="Image">
-          <th mat-header-cell *matHeaderCellDef> Image </th>
-          <td mat-cell *matCellDef="let element"> <img src={{element.product.productImages[0].url}} height="200px"> </td>
-        </ng-container>
+            <p style="margin:10px">
+              <mat-icon>favorite_border</mat-icon>
+              <a>Add to Favorites</a>
+              &nbsp;
+              <mat-icon (click)="delete(element.cardId)">delete_outline</mat-icon>
+              <a (click)="delete(element.cardId)">Delete</a>
+            </p>
+          </div>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="Description">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
-            <td mat-cell *matCellDef="let element"> {{element.product.productDescription}} </td>
-          </ng-container>
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <div class="details">
+            <span class="ProductCounterButton">
+              <span (click)="decreaseProductAmount(element.product.productId)"> - </span>
+              <a> {{element.amount}} </a>
+              <span (click)="increaseProductAmount(element.product.productId)"> + </span>
+            </span>
 
-          <ng-container matColumnDef="Price">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let element"> {{element.product.productActualPrice}} </td>
-          </ng-container>
+            <p class="UnitPrice">Unit Price :
+              <span class="ActualPrice"> &nbsp;<b>{{element.product.productActualPrice}} $</b> </span> &nbsp;
+              <span class="DiscountedPrice"><b>{{element.product.productDiscountedPrice}} $</b> </span>
+            </p>
+          </div>
+        </td>
+      </ng-container>
 
-          <ng-container matColumnDef="DiscountedPrice">
-            <th mat-header-cell *matHeaderCellDef> DiscountedPrice </th>
-            <td mat-cell *matCellDef="let element"> {{element.product.productDiscountedPrice}} </td>
-          </ng-container>
+      <ng-container matColumnDef="Total">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <h2><b>{{getAmount(element.product.productDiscountedPrice , element.amount)}}$</b></h2>
+        </td>
+      </ng-container>
 
-          <ng-container matColumnDef="Action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="warn" (click)="delete(element.cardId)"
-              aria-label="Example icon button with a delete icon">
-              <mat-icon>delete</mat-icon>
-            </button>
-            </td>
-          </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+  <div class="summary mt-5">
+    <div class="content">
+      <div class="header">
+        <h1> Order Summary</h1>
+        <div class="horizontal-line"></div>
+      </div>
+      <br>
+      <div class="text-container">
+        <div class="text">
+          <p class="text-left">Products value : </p>
+          <p class="spacer"></p>
+          <p class="text-right">{{getTotalAmount()}} $</p>
+        </div>
+        <div class="text">
+          <p class="text-left">Discount : </p>
+          <p class="spacer"></p>
+          <p class="text-right">{{getTotalDiscount()}} $</p>
+        </div>
+        <div class="text">
+          <p class="text-left"><b>Total :</b> </p>
+          <p class="spacer"></p>
+          <h2 class="text-right"><b>{{getTotalAmount()}} $</b></h2>
+        </div>
+        <div class="horizontal-line"></div>
+      </div>
+      <div class="mt-3">
+        <button mat-raised-button class="checkOutButton" (click)="checkout()"><span>Checkout</span></button>
+      </div>
+      <br>
+      <div class="card">
+        <div class="item">
+          <mat-icon>flag</mat-icon>
+          &nbsp;
+          <div>
+            <a>FREE SHIPING</a>
+            <p>for delivery through EASY BOX service</p>
+          </div>
+        </div>
+        <div class="item">
+          <mat-icon>flag</mat-icon>
+          &nbsp;
+          <div>
+            <a>FREE SHIPING</a>
+            <p>for delivery for orders over 49.99 $</p>
+          </div>
+        </div>
+        <div class="item">
+          <mat-icon>autorenew</mat-icon>
+          &nbsp;
+          <div>
+            <a>RETRUN</a>
+            <p>14 days return policy</p>
+          </div>
+        </div>
+        <div class="item">
+          <mat-icon>lock_open</mat-icon>
+          &nbsp;
+          <div>
+            <a>TRANSACTIONS</a>
+            <p>Safety</p>
+          </div>
+        </div>
+        <div class="item">
+          <mat-icon> chat</mat-icon>
+          &nbsp;
+          <div>
+            <a>CALL CENTER 023-938-77-88</a>
+            <p>Monday - Friday 09:00-14:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

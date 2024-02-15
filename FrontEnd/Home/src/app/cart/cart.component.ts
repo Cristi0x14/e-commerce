@@ -13,52 +13,96 @@ import { Product } from 'src/_model/product.model';
 })
 export class CartComponent {
 
-  displayedColumns: string[] = ['Name', 'Image','Description', 'Price', 'DiscountedPrice','Action'];
-  cartProducts : any = [];
+  displayedColumns: string[] = ['Image', 'Action','Total'];
+  cartProducts: any = [];
 
-  constructor(private productService : ProductService, private router : Router,private imageProcessingService: ImageProcessingService){
+  constructor(private productService: ProductService, private router: Router, private imageProcessingService: ImageProcessingService) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getCartProducts();
   }
 
   getCartProducts(): void {
     this.productService.getCartDetails()
       .subscribe(
-        (response: any) => { 
+        (response: any) => {
           console.log(response);
           this.cartProducts = response.map((item: any) => {
             return {
               cardId: item.cardId,
+              amount: item.amount,
               product: this.imageProcessingService.createImages(item.product),
               user: item.user
             };
           });
         },
-        (error: any) => { 
+        (error: any) => {
           console.log(error);
         }
       );
   }
-  checkout(){
+  checkout() {
     this.router.navigate(['/buyProduct', {
       isSingleProductCheckout: false,
       id: 0
     }]);
   }
 
-  delete(cartId: any){
+  delete(cartId: any) {
     console.log(cartId)
     this.productService.deleteCartItem(cartId).subscribe(
-      (response) =>{
+      (response) => {
         console.log(response);
         this.getCartProducts();
       },
-      (error) =>{
+      (error) => {
         console.log(error);
       }
     );
+  }
+  getTotalAmount(): string {
+    let total = 0;
+    this.cartProducts.forEach((cartItem: any) => {
+      total += cartItem.amount * cartItem.product.productDiscountedPrice;
+    });
+    return total.toFixed(2);
+  }
+
+  getTotalDiscount(): string {
+    let total = 0;
+    this.cartProducts.forEach((cartItem: any) => {
+      total += cartItem.amount * (cartItem.product.productActualPrice - cartItem.product.productDiscountedPrice);
+    });
+    return total.toFixed(2);
+  }
+  
+  increaseProductAmount(productId : number){
+    this.productService.addToCart(productId).subscribe(
+      (response) => {
+        console.log(response);
+        this.getCartProducts();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  decreaseProductAmount(productId:number){
+    this.productService.removeFromCart(productId).subscribe(
+      (response) => {
+        console.log(response);
+        this.getCartProducts();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getAmount(price:number,amount:number){
+    let total = price * amount;
+    return total.toFixed(2);
   }
 }

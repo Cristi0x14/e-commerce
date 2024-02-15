@@ -20,7 +20,8 @@ public class CartService {
     private ProductDao productDao;
     @Autowired
     private UserDao userDao;
-    public Cart addToCart(Integer productId){
+
+    public Cart addToCart(Integer productId) {
         Product product = productDao.findById(productId).get();
         String currentUser = JwtRequestFilter.CURRENT_USER;
         User user = null;
@@ -28,19 +29,50 @@ public class CartService {
             user =  userDao.findById(currentUser).get();
         }
 
-        List<Cart> cartList = cartDao.findByUser(user);
-        List<Cart> filteredList = cartList.stream().filter(x -> x.getProduct().getProductId() == productId).collect(Collectors.toList());
+        Optional<Cart> existingCartOptional = cartDao.findByUserAndProduct(user, product);
 
-        if(filteredList.size()>0){
+        if (existingCartOptional.isPresent()) {
+            Cart existingCart = existingCartOptional.get();
+            existingCart.setAmount(existingCart.getAmount() + 1);
+            return cartDao.save(existingCart);
+        } else {
+            Cart newCart = new Cart(product, user);
+            newCart.setAmount(1);
+            return cartDao.save(newCart);
+        }
+    }
+
+    public Cart removeFromCart(Integer productId) {
+        Product product = productDao.findById(productId).orElse(null);
+        if (product == null) {
             return null;
         }
 
-        if(product != null && user != null){
-            Cart cart = new Cart(product,user);
-            return cartDao.save(cart);
+        String currentUser = JwtRequestFilter.CURRENT_USER;
+        User user = null;
+        if (currentUser != null) {
+            user = userDao.findById(currentUser).orElse(null);
         }
-        return null;
+        if (user == null) {
+            return null;
+        }
+
+        Optional<Cart> existingCartOptional = cartDao.findByUserAndProduct(user, product);
+        if (existingCartOptional.isPresent()) {
+            Cart existingCart = existingCartOptional.get();
+            int newAmount = existingCart.getAmount() - 1;
+            if (newAmount <= 0) {
+                //cartDao.delete(existingCart);
+                return null;
+            } else {
+                existingCart.setAmount(newAmount);
+                return cartDao.save(existingCart);
+            }
+        } else {
+            return null;
+        }
     }
+
 
     public List<Cart> getCartDetails(){
         String currentUser = JwtRequestFilter.CURRENT_USER;

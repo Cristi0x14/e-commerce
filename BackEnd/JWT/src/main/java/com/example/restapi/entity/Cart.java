@@ -13,6 +13,16 @@ public class Cart {
     @OneToOne
     private User user;
 
+    private Integer amount = 1;
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
     public Cart() {
 
     }

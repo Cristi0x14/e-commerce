@@ -17,6 +17,12 @@ public class CartController {
     public Cart addToCart(@PathVariable(name = "productId") Integer productId){
         return cartService.addToCart(productId);
     }
+
+    @PreAuthorize("hasRole('User')")
+    @GetMapping("/removeFromCart/{productId}")
+    public Cart removeFromCart(@PathVariable(name = "productId") Integer productId){
+        return cartService.removeFromCart(productId);
+    }
     @PreAuthorize("hasRole('User')")
     @GetMapping({"/getCartDetails"})
     public List<Cart> getCartDetails(){

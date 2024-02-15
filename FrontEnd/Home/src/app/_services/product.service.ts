@@ -48,6 +48,9 @@ export class ProductService {
   public addToCart(productId: number) {
     return this.httpClient.get("http://localhost:8081/addToCart/" + productId);
   }
+  public removeFromCart(productId: number) {
+    return this.httpClient.get("http://localhost:8081/removeFromCart/" + productId);
+  }
   public getCartDetails(){
     return this.httpClient.get("http://localhost:8081/getCartDetails");
   }
