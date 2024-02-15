@@ -1,24 +1,185 @@
-.product-name {
-    white-space: normal; 
-}
-
 .product-name-text {
     display: flex;
     max-width: 300px;
     word-wrap: break-word; 
 }
-.custom-table-width {
-    width: 50%;
-}
-.container{
-    margin-bottom: 20px;
-    max-height: 90vh;
-}
-.card{
-    max-height: 90vh;
-}
-
 .table-wrapper {
     max-height: 40vh;
     overflow-y: auto;
+    border: solid 2px #f0f0f0;
+    background-color: white;
 }
+
+.container {
+    width: 66%;
+    margin-bottom: 30px;
+}
+
+table th,
+td {
+    padding: 10px;
+    text-align: start !important;
+    vertical-align: middle !important;
+}
+
+.details {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ProductCounterButton {
+    border: solid 1px lightgray;
+    border-radius: 20px;
+    font-size: 30px;
+    background-color: #f0f0f0;
+    margin-left: 10px;
+    color: rgb(127, 127, 127);
+}
+
+.UnitPrice{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.ActualPrice{
+    text-decoration: line-through;
+}
+.DiscountedPrice b{
+    color: red !important;
+}
+
+.Title{
+    display: flex;
+    flex-direction: column;
+}
+.Title mat-icon{
+    vertical-align: bottom;
+    cursor: pointer;
+    margin-right: 3px;
+}
+.Title a
+{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.details a{
+    font-size: 20px;
+    vertical-align: middle;
+    padding: 5px;
+}
+.ProductCounterButton{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.ProductCounterButton span{
+    cursor: pointer;
+}
+
+.Title b{
+    color: #3f51b5;
+}
+
+.region{
+    display: flex;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.summary{
+    width: 30%;
+    background-color: #3f51b5;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0px 0px 10px 0px #888888;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-bottom: 20px;
+}
+.horizontal-line {
+    height: 1px; 
+    background-color: white;
+  }
+.spacer{
+    flex-grow: 1;
+}
+.summary .text .value{
+    text-align: right;
+  }
+.summary .text{
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-container .horizontal-line {
+    height: 3px; 
+    background-color: white;
+  }
+
+  .checkOutButton{
+    height: 4rem;
+    width: 100%;
+    border-radius: 35px;
+    background-color: #2fec8e;
+  }
+  .checkOutButton span{
+    font-size: 16px;
+  }
+
+  .summary .card{
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px #888888;
+  }
+
+  .card .item{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .summary .card .item .mat-icon {
+    font-size: 50px;
+    height: 50px ;
+    width: 50px;
+}
+
+.checkout{
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.checkout .title{
+    font-size: 40px;
+    color: #3f51b5;
+}
+.checkout .subtitle{
+    font-size: 30px;
+    color: dimgray;
+    margin-top: 25px;
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .checkout .card {
+    width: 50lvw;
+    height: 10lvh;
+    border-radius: 0;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .checkout .card mat-radio-button .text{
+    display: flex;
+    align-items: center;
+  }
+  .checkout .card mat-icon{
+    padding-right: 10px;
+    margin-right: 10px;
+  }

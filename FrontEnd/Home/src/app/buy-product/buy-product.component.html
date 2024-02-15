@@ -1,59 +1,157 @@
-<body>
-    <div class="container mt-3">
-        <div class="card p-3">
-            <div class="row">
-                <div class="col-6">
-                    <form #orderForm="ngForm" (ngSubmit)="placeOrder(orderForm)">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Full name</mat-label>
-                            <input matInput placeholder="Full name" [(ngModel)]="orderDetails.fullName" name="fullName">
-                        </mat-form-field>
-    
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Full address</mat-label>
-                            <input matInput placeholder="Full address" [(ngModel)]="orderDetails.fullAddress" name="fullAddress">
-                        </mat-form-field>
-    
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Contact Number</mat-label>
-                            <input matInput placeholder="Contact Number" [(ngModel)]="orderDetails.contactNumber" name="contactNumber">
-                        </mat-form-field>
-    
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Alternate Contact Number</mat-label>
-                            <input matInput placeholder="Alternate Contact Number" [(ngModel)]="orderDetails.alternateContactNumber" name="alternateContactNumber">
-                        </mat-form-field>
-                        <div align="right">
-                            <button type="submit" mat-stroked-button color="primary">Place Order</button>
+<div class="region">
+    <div class="container mt-5">
+        <div class="checkout">
+
+            <p class="title"><b>Checkout<span style="color: red;">.</span></b></p>
+            <p class="subtitle">- Delivery Options :</p>
+
+            <label id="example-radio-group-label"></label>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                [(ngModel)]="deliveryChose">
+                <div class="card">
+                    <mat-radio-button color="primary" class="example-radio-button" [value]="deliveryOption[0]">
+                        <div class="text">
+                            <div class="icon">
+                                <mat-icon>home</mat-icon>
+                            </div>
+                            <div class="text-a">
+                                <b>Home Delivery</b> 
+                                <br>
+                                Get your products delivered at your door.
+                            </div>
                         </div>
-                    </form>
+                    </mat-radio-button>
                 </div>
-                <div class="col-6">
-                    <div align="right">
-                        <div class="table-wrapper">                        
-                            <table class="table custom-table-width">
-                            <thead class="thead">
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Description</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbody">
-                                <tr *ngFor="let product of cartProducts">
-                                    <td><img src={{product.product.productImages[0].url}} height="70px"></td>
-                                    <td class="product-name">
-                                        <span class="product-name-text">{{product.amount}} x {{product.product.productName}}</span>
-                                    </td>
-                                    <td>
-                                        {{getCalculatedTotal(product.amount,product.product.productDiscountedPrice)}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table></div>
+                <div class="card"> 
+                    <mat-radio-button color="primary" class="example-radio-button" [value]="deliveryOption[1]"> 
+                        <div class="text">
+                            <div class="icon">
+                                <mat-icon>flag</mat-icon>
+                            </div>
+                            <div class="text-a">
+                                <b>Easy Box</b>
+                                <br>
+                                <span style="text-decoration: underline;">Free shiping</span> 
+                                Chose an EasyBox close to your location. You will get a notification on email and on your phone number when your products will be ready for pick up
+                                in your locker.
+                            </div>
+                        </div>
+                    </mat-radio-button>
+                </div>
+                <div class="card"> 
+                    <mat-radio-button color="primary" class="example-radio-button" [value]="deliveryOption[2]"> 
+                        <div class="text">
+                            <div class="icon">
+                                <mat-icon>store</mat-icon>
+                            </div>
+                            <div class="text-a">
+                                <b>Store</b>
+                                <br>
+                                <span style="text-decoration: underline;">Free shiping</span> 
+                                Chose from one of our Stores. You will get a notification on email and on your phone number when your products will be ready for pick up
+                                at your chosen store.
+                            </div>
+                        </div>
+                    </mat-radio-button>
+                </div>
+            </mat-radio-group>
+        </div>
+    </div>
+
+    <div class="summary mt-5">
+        <div class="content">
+            <div class="header">
+                <h1> Verify Products</h1>
+                <div class="horizontal-line"></div>
+            </div>
+            <br>
+
+            <div class="table-wrapper">
+                <table class="table custom-table-width">
+                    <thead class="thead">
+                        <tr>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody">
+                        <tr *ngFor="let product of cartProducts">
+                            <td><img src={{product.product.productImages[0].url}} height="70px"></td>
+                            <td class="product-name">
+                                <span class="product-name-text">{{product.amount}} x
+                                    {{product.product.productName}}</span>
+                            </td>
+                            <td>
+                                {{getCalculatedTotal(product.amount,product.product.productDiscountedPrice)}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-container">
+                <div class="horizontal-line mt-2 mb-2"></div>
+                <div class="text">
+                    <p class="text-left">{{getProductsCounter()}} Products : </p>
+                    <p class="spacer"></p>
+                    <p class="text-right">{{getTotalAmount()}} $</p>
+                </div>
+                <div class="text">
+                    <p class="text-left"><b>Total :</b> </p>
+                    <p class="spacer"></p>
+                    <h2 class="text-right"><b>{{getTotalAmount()}} $</b></h2>
+                </div>
+                <div class="horizontal-line"></div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="item">
+                    <div class="icon">
+                        <mat-icon>flag</mat-icon>
+                    </div>
+                    &nbsp;
+                    <div>
+                        <a>FREE SHIPING</a>
+                        <p>for delivery through EasyBox and Store delivery options.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="icon">
+                        <mat-icon>flag</mat-icon>
+                    </div>
+                    &nbsp;
+                    <div>
+                        <a>FREE SHIPING</a>
+                        <p>for delivery for orders over 49.99 $</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="icon">
+                        <mat-icon>autorenew</mat-icon>
+                    </div>
+                    &nbsp;
+                    <div>
+                        <a>RETRUN</a>
+                        <p>14 days return policy</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="icon">
+                        <mat-icon>lock_open</mat-icon>
+                    </div>
+                    &nbsp;
+                    <div>
+                        <a>TRANSACTIONS</a>
+                        <p>Safety</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <mat-icon> chat</mat-icon>
+                    &nbsp;
+                    <div>
+                        <a>CALL CENTER 023-938-77-88</a>
+                        <p>Monday - Friday 09:00-14:00</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>

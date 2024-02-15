@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetails } from 'src/_model/order-details.model';
@@ -17,8 +17,9 @@ export class BuyProductComponent {
 
   productDetails: Product[] = [];
   isSingleProductCheckout : any = '';
-  amount: number = 199;
   cartProducts: any = [];
+  deliveryChose : string = "";
+  deliveryOption: string[]=["Home Delivery","Easy Box","At Store"];
 
   
   ngOnInit() : void {
@@ -32,8 +33,7 @@ export class BuyProductComponent {
     this.getCartProducts();
   }
 
-  constructor(private imageProcessingService:ImageProcessingService,private paymentService : PaymentServiceService,private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
-
+  constructor(private elementRef: ElementRef,private imageProcessingService:ImageProcessingService,private paymentService : PaymentServiceService,private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
   }
 
   getCartProducts(): void {
@@ -114,5 +114,12 @@ export class BuyProductComponent {
       total += cartItem.amount * cartItem.product.productDiscountedPrice;
     });
     return total.toFixed(2);
+  }
+  getProductsCounter() : number{
+    let counter = 0;
+    this.cartProducts.forEach((cartItem: any) => {
+      counter += cartItem.amount;
+    });
+    return counter;
   }
 }
