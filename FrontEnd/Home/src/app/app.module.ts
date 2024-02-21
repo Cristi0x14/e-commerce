@@ -45,6 +45,8 @@ import { SearchPopupComponent } from './search-popup/search-popup.component';
 import { CategoryTabComponent } from './category-tab/category-tab.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,7 +93,10 @@ import { SubCategoryComponent } from './sub-category/sub-category.component';
     MatDialogModule,
     MatButtonToggleModule,
     FontAwesomeModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [
     authGuard,

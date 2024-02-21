@@ -1,13 +1,12 @@
 import { NgFor } from '@angular/common';
 import { Component, ElementRef, Input } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators,FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetails } from 'src/_model/order-details.model';
 import { Product } from 'src/_model/product.model';
 import { ProductService } from '../_services/product.service';
 import { PaymentServiceService } from '../payment-service.service';
 import { ImageProcessingService } from '../image-processing.service';
-
 @Component({
   selector: 'app-buy-product',
   templateUrl: './buy-product.component.html',
@@ -15,11 +14,32 @@ import { ImageProcessingService } from '../image-processing.service';
 })
 export class BuyProductComponent {
 
+  countryForm: FormGroup;
+  countries = [
+    { name: 'Country 1', counties: ['county 1', 'county 2', 'county 3'] },
+    { name: 'Country 2', counties: ['county 4', 'county 5', 'county 6'] },
+    // Add more countries and cities as needed
+  ];
+
+
   productDetails: Product[] = [];
   isSingleProductCheckout : any = '';
   cartProducts: any = [];
   deliveryChose : string = "";
   deliveryOption: string[]=["Home Delivery","Easy Box","At Store"];
+
+  deliveryForm: FormGroup;
+  submitAttempted: boolean = false;
+
+  email = new FormControl('', [Validators.required, Validators.email]);
+
+  getErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.email.hasError('email') ? 'Not a valid email' : '';
+  }
 
   
   ngOnInit() : void {
@@ -33,7 +53,22 @@ export class BuyProductComponent {
     this.getCartProducts();
   }
 
-  constructor(private elementRef: ElementRef,private imageProcessingService:ImageProcessingService,private paymentService : PaymentServiceService,private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
+  constructor(private formBuilder: FormBuilder,private elementRef: ElementRef,private imageProcessingService:ImageProcessingService,private paymentService : PaymentServiceService,private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
+    this.countryForm = this.formBuilder.group({
+      country: [''],
+      city: ['']
+    });
+    this.deliveryForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      phone: ['', Validators.required],
+      country: ['', Validators.required],
+      county: ['', Validators.required],
+      city: ['', Validators.required],
+      street: ['', Validators.required],
+      streetno: ['', Validators.required],
+  });
   }
 
   getCartProducts(): void {
@@ -121,5 +156,34 @@ export class BuyProductComponent {
       counter += cartItem.amount;
     });
     return counter;
+  }
+
+  get selectedCountryCounty() {
+    const countryControl = this.countryForm.get('country');
+    if (countryControl) {
+      const selectedCountry = countryControl.value;
+      const country = this.countries.find(c => c.name === selectedCountry);
+      return country ? country.counties : [];
+    }
+    return null;
+  }
+
+  homeDelivery(){
+    if(this.deliveryChose=="Home Delivery"){
+      return true;
+    }
+    else return false;
+  }
+
+  submitForm() {
+    this.submitAttempted = true;
+    console.log(this.submitAttempted);
+    if (this.deliveryForm.valid) {
+      // Form is valid, proceed with submission logic
+      console.log("Form submitted successfully!");
+    } else {
+      // Form is invalid, highlight invalid fields
+      console.log("Form contains errors!");
+    }
   }
 }
