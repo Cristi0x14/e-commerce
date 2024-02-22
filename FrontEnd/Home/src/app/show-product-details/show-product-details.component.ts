@@ -22,7 +22,7 @@ export class ShowProductDetailsComponent implements OnInit {
   products: Product[] = [];
   pageNumber: number = 0;
   showTable = false;
-  showLoadMoreProductButton = false;
+  showLoadMoreProductButton = true;
   searchKey: String = "";
 
   displayedColumns: string[] = ['Id', 'Name', 'productdescription', 'DiscountedPrice', 'ActualPrice', 'Actions'];
@@ -46,7 +46,7 @@ export class ShowProductDetailsComponent implements OnInit {
         (data: Product[]) => {
           data.forEach(p => this.products.push(p));
           this.showTable = true;
-          if (data.length == 10) {
+          if (data.length == 12) {
             this.showLoadMoreProductButton = true;
           }
           else {
