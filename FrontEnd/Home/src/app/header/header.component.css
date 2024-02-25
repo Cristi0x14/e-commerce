@@ -150,10 +150,16 @@
   vertical-align: middle; /* Adjust the value as needed */
 }
 
+.preheader{
+  text-align: end;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* background-color: #dfdfdf; */
+  border-top: solid 1px black;
 }
 
 .actions {

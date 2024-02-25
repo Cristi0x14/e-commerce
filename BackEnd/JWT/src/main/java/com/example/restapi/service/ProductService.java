@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.restapi.configuration.JwtRequestFilter;
-import com.example.restapi.dao.CartDao;
-import com.example.restapi.dao.ProductDao;
-import com.example.restapi.dao.UserDao;
+import com.example.restapi.dao.*;
 import com.example.restapi.entity.Cart;
 import com.example.restapi.entity.Product;
 import com.example.restapi.entity.User;
@@ -85,5 +83,44 @@ public class ProductService {
             return cart.stream().map(x -> x.getProduct()).collect(Collectors.toList());
         }
     }
+    public List<Product> getProductsByCategory(String category) {
+        return productDao.findByCategory(category);
+    }
 
+
+/*    public List<Product> searchProducts(List<String> brands, List<String> types, List<String> colors, List<String> sizes, List<String> genders) {
+        // Implement your logic to search for products based on the provided parameters
+        return productDao.findByBrandIgnoreCaseInAndCategoryIgnoreCaseInAndColorIgnoreCaseInAndSizeIgnoreCaseInAndGenderIgnoreCaseIn(brands, types, colors, sizes, genders);
+    }*/
+
+    public List<Product> searchBrands(List<String> brands){
+        return productDao.findByBrandIgnoreCaseIn(brands);
+    }
+    public List<Product> searchCategory(List<String> category)
+    {
+        return productDao.findByCategoryIgnoreCaseIn(category);
+    }
+    public List<Product> searchGender(List<String> category)
+    {
+        return productDao.findByGenderIgnoreCaseIn(category);
+    }
+    public List<Product> searchBrandsCategory(List<String> brands,List<String> category){
+        return productDao.findByBrandIgnoreCaseInAndCategoryIgnoreCaseIn(brands,category);
+    }
+    public List<Product> searchBrandsGender(List<String> brands,List<String> gender){
+        return productDao.findByBrandIgnoreCaseInAndGenderIgnoreCaseIn(brands,gender);
+    }
+    public List<Product> searchCategoryGender(List<String> category,List<String> gender){
+        return productDao.findByBrandIgnoreCaseInAndCategoryIgnoreCaseIn(category,gender);
+    }
+    public List<Product> searchBrandCategoryGender(List<String> brand,List<String> category,List<String> gender){
+        return productDao.findByBrandIgnoreCaseInAndCategoryIgnoreCaseInAndGenderIgnoreCaseIn(brand,category,gender);
+    }
+
+
+    @Autowired
+    private ProductRepository productRepository;
+    public List<Product> searchProducts(List<String> brands, List<String> categories, List<String> colors, List<String> sizes, List<String> genders) {
+        return productRepository.findAll(new ProductSpecification(brands, categories, colors, sizes, genders));
+    }
 }

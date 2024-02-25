@@ -142,7 +142,7 @@ td {
 
 .summary .card {
     flex-grow: 1;
-    background-color: #f0f0f0;
+    background-color: white;
     padding: 20px;
     box-shadow: 0px 0px 10px 0px #888888;
 }
@@ -253,8 +253,9 @@ td {
 
 .footer {
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: white;
     text-align: center;
+    border: solid 1px #f0f0f0;
 }
 
 .footer-content {
@@ -292,4 +293,10 @@ td {
 
 .payemnt-options{
     margin-bottom: 100px;
+}
+.foot .helper-text{
+    color: red;
+    text-decoration: underline;
+    font-size: larger;
+    margin-bottom: 5px;
 }

@@ -20,6 +20,7 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentResolveService } from './payment-resolve.service';
 import { CategoryTabComponent } from './category-tab/category-tab.component';
+import { ShoesComponent } from './shoes/shoes.component';
 const routes: Routes = [
   { path: 'allsports', component: HomeComponent },
   { path: 'allsports/:category', component: HomeComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'allOrders', component: AllOrdersComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
   { path: 'payment', component: PaymentComponent, canActivate: [authGuard], data: { roles: ['User'] } },
   { path: 'category', component: CategoryTabComponent },
+  { path: 'shoes', component: ShoesComponent },
 
 ];
 

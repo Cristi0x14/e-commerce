@@ -141,7 +141,9 @@
                 <p class="subtitle">- Billing Information</p>
                 <div class="card mt-4">
                     <p>
-                        <mat-error *ngIf="deliveryForm.get('firstName')?.invalid  && submitAttempted"><p>* First Name is required</p></mat-error>
+                        <mat-error *ngIf="deliveryForm.get('firstName')?.invalid  && submitAttempted">
+                            <p>* First Name is required</p>
+                        </mat-error>
                         <mat-form-field appearance="outline"
                             [ngClass]="{'invalid': deliveryForm.get('firstName')?.invalid  && submitAttempted}">
                             <mat-label>First Name </mat-label>
@@ -149,7 +151,9 @@
                         </mat-form-field>
                     </p>
                     <p>
-                        <mat-error *ngIf="deliveryForm.get('lastName')?.invalid  && submitAttempted"><p>* Last Name is required</p></mat-error>
+                        <mat-error *ngIf="deliveryForm.get('lastName')?.invalid  && submitAttempted">
+                            <p>* Last Name is required</p>
+                        </mat-error>
                         <mat-form-field appearance="outline"
                             [ngClass]="{'invalid': deliveryForm.get('lastName')?.invalid  && submitAttempted}">
                             <mat-label>Last Name </mat-label>
@@ -157,7 +161,9 @@
                         </mat-form-field>
                     </p>
                     <p>
-                        <mat-error *ngIf="deliveryForm.get('email')?.invalid  && submitAttempted"><p>* Email is required</p></mat-error>
+                        <mat-error *ngIf="deliveryForm.get('email')?.invalid  && submitAttempted">
+                            <p>* Email is required</p>
+                        </mat-error>
                         <mat-form-field appearance="outline"
                             [ngClass]="{'invalid': deliveryForm.get('email')?.invalid  && submitAttempted}">
                             <mat-label>Email </mat-label>
@@ -165,7 +171,9 @@
                         </mat-form-field>
                     </p>
                     <p>
-                        <mat-error *ngIf="deliveryForm.get('phone')?.invalid  && submitAttempted"><p>* Phone Number is required</p></mat-error>
+                        <mat-error *ngIf="deliveryForm.get('phone')?.invalid  && submitAttempted">
+                            <p>* Phone Number is required</p>
+                        </mat-error>
                         <mat-form-field appearance="outline"
                             [ngClass]="{'invalid': deliveryForm.get('phone')?.invalid  && submitAttempted}">
                             <mat-label>Phone Number </mat-label>
@@ -173,7 +181,9 @@
                         </mat-form-field>
                     </p>
                     <p>
-                        <mat-error *ngIf="deliveryForm.get('country')?.invalid  && submitAttempted"><p>* Country is required</p></mat-error>
+                        <mat-error *ngIf="deliveryForm.get('country')?.invalid  && submitAttempted">
+                            <p>* Country is required</p>
+                        </mat-error>
                         <mat-form-field appearance="outline"
                             [ngClass]="{'invalid': deliveryForm.get('country')?.invalid  && submitAttempted}">
                             <mat-label>Country </mat-label>
@@ -183,38 +193,42 @@
                     <div class="address">
                         <div class="row">
                             <p>
-                                <mat-error *ngIf="deliveryForm.get('county')?.invalid  && submitAttempted">* County is required</mat-error>
+                                <mat-error *ngIf="deliveryForm.get('county')?.invalid  && submitAttempted">* County is
+                                    required</mat-error>
                                 <mat-form-field appearance="outline"
-                                [ngClass]="{'invalid': deliveryForm.get('county')?.invalid  && submitAttempted}">
-                                <mat-label>County </mat-label>
-                                <input matInput placeholder="" formControlName="county">
-                            </mat-form-field>
+                                    [ngClass]="{'invalid': deliveryForm.get('county')?.invalid  && submitAttempted}">
+                                    <mat-label>County </mat-label>
+                                    <input matInput placeholder="" formControlName="county">
+                                </mat-form-field>
                             </p>
                             <p>
-                                <mat-error *ngIf="deliveryForm.get('city')?.invalid  && submitAttempted">* City is required</mat-error>
+                                <mat-error *ngIf="deliveryForm.get('city')?.invalid  && submitAttempted">* City is
+                                    required</mat-error>
                                 <mat-form-field appearance="outline"
-                                [ngClass]="{'invalid': deliveryForm.get('city')?.invalid  && submitAttempted}">
-                                <mat-label>City </mat-label>
-                                <input matInput placeholder="" formControlName="city">
-                            </mat-form-field>
+                                    [ngClass]="{'invalid': deliveryForm.get('city')?.invalid  && submitAttempted}">
+                                    <mat-label>City </mat-label>
+                                    <input matInput placeholder="" formControlName="city">
+                                </mat-form-field>
                             </p>
                         </div>
                         <div class="row">
                             <p>
-                                <mat-error *ngIf="deliveryForm.get('street')?.invalid  && submitAttempted">* Street is required</mat-error>
+                                <mat-error *ngIf="deliveryForm.get('street')?.invalid  && submitAttempted">* Street is
+                                    required</mat-error>
                                 <mat-form-field appearance="outline"
-                                [ngClass]="{'invalid': deliveryForm.get('street')?.invalid  && submitAttempted}">
-                                <mat-label>Street </mat-label>
-                                <input matInput placeholder="" formControlName="street">
-                            </mat-form-field>
+                                    [ngClass]="{'invalid': deliveryForm.get('street')?.invalid  && submitAttempted}">
+                                    <mat-label>Street </mat-label>
+                                    <input matInput placeholder="" formControlName="street">
+                                </mat-form-field>
                             </p>
                             <p>
-                                <mat-error *ngIf="deliveryForm.get('streetno')?.invalid  && submitAttempted">* Street number is required</mat-error>
+                                <mat-error *ngIf="deliveryForm.get('streetno')?.invalid  && submitAttempted">* Street
+                                    number is required</mat-error>
                                 <mat-form-field appearance="outline"
-                                [ngClass]="{'invalid': deliveryForm.get('streetno')?.invalid  && submitAttempted}">
-                                <mat-label>Street number </mat-label>
-                                <input matInput placeholder="" formControlName="streetno">
-                            </mat-form-field>
+                                    [ngClass]="{'invalid': deliveryForm.get('streetno')?.invalid  && submitAttempted}">
+                                    <mat-label>Street number </mat-label>
+                                    <input matInput placeholder="" formControlName="streetno">
+                                </mat-form-field>
                             </p>
                         </div>
                     </div>
@@ -259,10 +273,11 @@
                 </mat-radio-group>
             </div>
             <div class="foot mt-5">
+                <div class="helper-text" *ngIf="!agree && submitAttempted">You must agree before submitting the order</div>
                 <footer class="footer">
                     <div class="footer-content">
                         <label class="checkbox-label">
-                            <input type="checkbox">
+                            <input type="checkbox" [(ngModel)]="agree">
                             <div>
                                 I agree with the <a href="">terms of use</a> and the <a href="">personal data protection
                                     policy</a>
@@ -271,6 +286,7 @@
                         <div class="button-container">
                             <button mat-raised-button color="primary" (click)="submitForm()">Submit Order</button>
                         </div>
+
                     </div>
                 </footer>
             </div>

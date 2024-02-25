@@ -28,7 +28,7 @@ subcategoryTitle: String = "";
         },
         {
           name: 'Shoes', showSubcategories: false, route: '', subcategories: [
-            { name: 'All', route: 'allsports/' },
+            { name: 'All', route: 'shoes' },
           ]
         },
         {

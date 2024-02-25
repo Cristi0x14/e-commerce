@@ -1,12 +1,15 @@
 import { NgFor } from '@angular/common';
 import { Component, ElementRef, Input } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators,FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetails } from 'src/_model/order-details.model';
 import { Product } from 'src/_model/product.model';
 import { ProductService } from '../_services/product.service';
 import { PaymentServiceService } from '../payment-service.service';
 import { ImageProcessingService } from '../image-processing.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AgreementDialogComponent } from '../agreement-dialog/agreement-dialog.component';
+
 @Component({
   selector: 'app-buy-product',
   templateUrl: './buy-product.component.html',
@@ -23,37 +26,29 @@ export class BuyProductComponent {
 
 
   productDetails: Product[] = [];
-  isSingleProductCheckout : any = '';
+  isSingleProductCheckout: any = '';
   cartProducts: any = [];
-  deliveryChose : string = "";
-  deliveryOption: string[]=["Home Delivery","Easy Box","At Store"];
+  deliveryChose: string = "";
+  deliveryOption: string[] = ["Home Delivery", "Easy Box", "At Store"];
 
   deliveryForm: FormGroup;
   submitAttempted: boolean = false;
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  agree: boolean = false;
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
     this.isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
     this.productDetails.forEach(
       x => this.orderDetails.orderProductQuantityList.push(
-        {productId: x.productId, quantity: 1}
+        { productId: x.productId, quantity: 1 }
       )
     );
     this.getCartProducts();
   }
 
-  constructor(private formBuilder: FormBuilder,private elementRef: ElementRef,private imageProcessingService:ImageProcessingService,private paymentService : PaymentServiceService,private activatedRoute : ActivatedRoute, private productService: ProductService,private router:Router){
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private elementRef: ElementRef, private imageProcessingService: ImageProcessingService, private paymentService: PaymentServiceService, private activatedRoute: ActivatedRoute, private productService: ProductService, private router: Router) {
     this.countryForm = this.formBuilder.group({
       country: [''],
       city: ['']
@@ -68,7 +63,7 @@ export class BuyProductComponent {
       city: ['', Validators.required],
       street: ['', Validators.required],
       streetno: ['', Validators.required],
-  });
+    });
   }
 
   getCartProducts(): void {
@@ -99,40 +94,40 @@ export class BuyProductComponent {
     orderProductQuantityList: []
   }
 
-  placeOrder(orderForm: NgForm){
+  placeOrder(orderForm: NgForm) {
     this.productService.placeOrder(this.orderDetails, this.isSingleProductCheckout).subscribe(
       (resp) => {
         console.log(resp);
         orderForm.reset();
         this.router.navigate(["/payment"]);
       },
-      (err) =>{
+      (err) => {
         console.log(err);
       }
     );
   }
 
-  getQuantityForProduct(productId : Number){
-    const filteredProduct= this.orderDetails.orderProductQuantityList.filter(
+  getQuantityForProduct(productId: Number) {
+    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
       (productQuantity) => productQuantity.productId === productId
     )
     return filteredProduct[0].quantity;
   }
 
-  getCalculatedTotal(productDiscountedPrice: number,amount:number){
+  getCalculatedTotal(productDiscountedPrice: number, amount: number) {
     // const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
     //   (productQuantity) => productQuantity.productId === productId
     // );
     return (productDiscountedPrice * amount).toFixed(2);
   }
 
-  onQuantityChanged(quantity:any, productId:number){
+  onQuantityChanged(quantity: any, productId: number) {
     this.orderDetails.orderProductQuantityList.filter(
       (orderProduct) => orderProduct.productId === productId
     )[0].quantity = quantity;
   }
 
-  getCalculatedGrandTotal(){
+  getCalculatedGrandTotal() {
     let grandTotal = 0;
     this.orderDetails.orderProductQuantityList.forEach(
       (productQuantity) => {
@@ -140,7 +135,7 @@ export class BuyProductComponent {
         grandTotal = grandTotal + price * productQuantity.quantity;
       }
     );
-    this.paymentService.amountToPay=grandTotal;
+    this.paymentService.amountToPay = grandTotal;
     return grandTotal;
   }
   getTotalAmount(): string {
@@ -150,7 +145,7 @@ export class BuyProductComponent {
     });
     return total.toFixed(2);
   }
-  getProductsCounter() : number{
+  getProductsCounter(): number {
     let counter = 0;
     this.cartProducts.forEach((cartItem: any) => {
       counter += cartItem.amount;
@@ -168,8 +163,8 @@ export class BuyProductComponent {
     return null;
   }
 
-  homeDelivery(){
-    if(this.deliveryChose=="Home Delivery"){
+  homeDelivery() {
+    if (this.deliveryChose == "Home Delivery") {
       return true;
     }
     else return false;
@@ -179,11 +174,17 @@ export class BuyProductComponent {
     this.submitAttempted = true;
     console.log(this.submitAttempted);
     if (this.deliveryForm.valid) {
-      // Form is valid, proceed with submission logic
       console.log("Form submitted successfully!");
-    } else {
-      // Form is invalid, highlight invalid fields
+    }
+    else {
       console.log("Form contains errors!");
     }
+  }
+
+  openAgreementDialog(): void {
+    const dialogRef = this.dialog.open(AgreementDialogComponent);
+  }
+  checkboxChecked(): boolean {
+    return this.agree;
   }
 }

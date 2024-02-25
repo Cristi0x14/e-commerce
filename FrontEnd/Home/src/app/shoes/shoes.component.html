@@ -1,0 +1,199 @@
+<div class="pagination">
+    <div class="container">
+        <div class="text">
+            <p>Page
+                <select id="numberSelect" [(ngModel)]="pageNumber" (change)="onSelectionChange($event)"
+                    style="border-radius: 8px;">
+                </select>
+                of {{pageCount}}
+            </p>
+        </div>
+        <div class="buttons">
+            <button mat-mini-fab color="primary" (click)="pageBack()" aria-label="Example icon button with a home icon">
+                <span>
+                    < </span>
+            </button>
+            <button mat-mini-fab color="primary" (click)="pageForward()"
+                aria-label="Example icon button with a home icon">
+                <span> > </span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="contrainer mt-3">
+    <div class="content p-3">
+
+        <div class="side-menu">
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Gender
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div [formGroup]="gender">
+                        <section style="display: flex; flex-direction: column;">
+                            <mat-checkbox formControlName="men" color="primary">
+                                Men
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="women" color="primary">
+                                Women
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="unisex" color="primary">
+                                Unisex
+                            </mat-checkbox>
+                        </section>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Kids
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <mat-checkbox color="primary">
+                            Boys
+                        </mat-checkbox>
+                        <mat-checkbox color="primary">
+                            Girls
+                        </mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Sale % Offers
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <mat-checkbox color="primary">
+                            Sales
+                        </mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Size
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div>
+                        <div class="sizeTable">
+                            <div *ngFor="let size of shoeSizes; let i = index; let j = index; let k = index;">
+                                <div *ngIf=" i % 3 == 0" class="sizes">
+                                    <div class="sizeContent">
+                                        <div class="shoesSize" (click)="toggleSizeSelection(i)">
+                                            <span>{{shoeSizes[i]}}</span>
+                                            <span *ngIf="selectedSize[i]"> <mat-icon>check</mat-icon> </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="j + 1 < shoeSizes.length" class="sizeContent">
+                                        <div class="shoesSize" (click)="toggleSizeSelection(j + 1)">
+                                            <span>{{shoeSizes[j+1]}}</span>
+                                            <span *ngIf="selectedSize[j + 1]"> <mat-icon>check</mat-icon> </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="k + 2 < shoeSizes.length" class="sizeContent">
+                                        <div class="shoesSize" (click)="toggleSizeSelection(k + 2)">
+                                            <span>{{shoeSizes[k+2]}}</span>
+                                            <span *ngIf="selectedSize[k + 2]"> <mat-icon>check</mat-icon> </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Colour
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div>
+                        <div class="colorsTable">
+                            <div *ngFor="let color of colors; let i = index; let j = index; let k = index;">
+                                <div *ngIf=" i % 3 == 0;" class="colors">
+                                    <div>
+                                        <div class="circle" [ngClass]="colors[i].toLowerCase()"
+                                            (click)="toggleColorSelection(i)">
+                                            <span *ngIf="selectedColors[i]"> <mat-icon>check</mat-icon> </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="j + 1 < colors.length">
+                                        <div class="circle" [ngClass]="colors[j + 1].toLowerCase()"
+                                            (click)="toggleColorSelection(j + 1)">
+                                            <span *ngIf="selectedColors[j + 1]"> <mat-icon>check</mat-icon> </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="k + 2 < colors.length">
+                                        <div class="circle" [ngClass]="colors[k + 2].toLowerCase()"
+                                            (click)="toggleColorSelection(k + 2)">
+                                            <span *ngIf="selectedColors[k + 2]"> <mat-icon>check</mat-icon> </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+
+
+
+        <div class="card-container">
+            <mat-grid-list [cols]="breakpoint" rowHeight="7:8" gutterSize="20px">
+                <mat-grid-tile *ngFor="let p of products">
+                    <div class="row p-1" (click)="showProductDetails(p.productId)"
+                        style="cursor: pointer; text-align: center;">
+                        <div class="image-wrapper">
+                            <img [src]="p.productImages[0].url" alt="" class="home-page-product-image">
+                        </div>
+                        <div class="Text">
+                            <div class="Title mt-2">
+                                <b>{{p.productName}}&nbsp;<span
+                                        class="discount">-{{getDiscount(p.productActualPrice,p.productDiscountedPrice)}}%</span></b>
+                                <br>
+                                <span class="Price">
+                                    <b style="color: red;">
+                                        {{p.productDiscountedPrice}} $ USD
+                                    </b>
+                                    &nbsp;
+                                    <b style="text-decoration: line-through; color: black;">
+                                        {{p.productActualPrice}} $ USD
+                                    </b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="loadMore">
+                <div class="text-center mt-5" style="padding-bottom: 50px;" *ngIf="showLoadButton">
+                    <button type="button" mat-raised-button color="primary" (click)="pageForward()">Load More</button>
+                </div>
+                <div class="mt-5">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

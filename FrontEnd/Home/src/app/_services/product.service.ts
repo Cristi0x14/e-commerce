@@ -30,6 +30,24 @@ export class ProductService {
       );
   }
 
+  public getProducts(brands: String[],categories: String[],genders: String[]): Observable<Product[]> {
+    return this.httpClient.get<Product[]>("http://localhost:8081/products?brands=" + brands + "&categories=" + categories +"&genders=" + genders)
+      .pipe(
+        catchError((error: any) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  public getProductByCategory(searchKeyword1: String): Observable<Product[]> {
+    return this.httpClient.get<Product[]>("http://localhost:8081/category/"+searchKeyword1)
+      .pipe(
+        catchError((error: any) => {
+          return throwError(error);
+        })
+      );
+  }
+
   public getProductDetailsById(productId: number) {
     return this.httpClient.get<Product>("http://localhost:8081/getProductDetailsById/" + productId)
   }

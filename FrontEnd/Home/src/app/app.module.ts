@@ -46,7 +46,10 @@ import { CategoryTabComponent } from './category-tab/category-tab.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import {MatSelectModule} from '@angular/material/select';
-
+import { AgreementDialogComponent } from './agreement-dialog/agreement-dialog.component';
+import { CategoryComponent } from './category/category.component';
+import { ShoesComponent } from './shoes/shoes.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +76,9 @@ import {MatSelectModule} from '@angular/material/select';
     SearchPopupComponent,
     CategoryTabComponent,
     SubCategoryComponent,
+    AgreementDialogComponent,
+    CategoryComponent,
+    ShoesComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +102,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSidenavModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [
     authGuard,
