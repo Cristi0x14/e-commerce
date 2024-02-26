@@ -2,7 +2,9 @@ package com.example.restapi.controller;
 
 import com.example.restapi.entity.ImageModel;
 import com.example.restapi.entity.Product;
+import com.example.restapi.entity.ProductVariation;
 import com.example.restapi.service.ProductService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,26 +14,47 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class ProductController {
 
     @Autowired
     private ProductService productService;
+
     @PreAuthorize("hasRole('Admin')")
-    @PostMapping(value = {"/product/add"},consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = {"/product/add"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Product addProduct(@RequestPart("product") Product product,
-                              @RequestPart("image_file") MultipartFile[] file){
+                              @RequestPart("image_file") MultipartFile[] file,
+                              @RequestPart("variations") String variationsJson) {
         try {
             Set<ImageModel> images = uploadImage(file);
             product.setProductImages(images);
-            return productService.addProduct(product);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductVariation[] variations = objectMapper.readValue(variationsJson, ProductVariation[].class);
+
+            Product productSaved =productService.addProduct(product);
+
+            for (ProductVariation variation : variations) {
+                variation.setProductId(productSaved.getProductId());
+                variation.setProductName(productSaved.getProductName());
+                productService.addProductVariation(variation);
+            }
+
+            return productSaved;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        catch (Exception e){
+    }
+
+    @PreAuthorize("hasRole('Admin')")
+    @PostMapping(value = {"/product/add/CompleteProductJson"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Product addProductFullJson(@RequestBody Product product ){
+        try {
+            return productService.addProduct(product);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -90,22 +113,6 @@ public class ProductController {
         return productService.getProductDetails(isSingleProductCheckout,productId);
     }
 
-
-
-/*    @GetMapping("/products")
-    public ResponseEntity<List<Product>> searchProducts(
-            @RequestParam(required = false) List<String> brand,
-            @RequestParam(required = false) List<String> category,
-            @RequestParam(required = false) List<String> color,
-            @RequestParam(required = false) List<String> size,
-            @RequestParam(required = false) List<String> gender) {
-        List<Product> products = productService.searchProducts(brand, category, color, size, gender);
-        if (products.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }*/
-
     @GetMapping("/products")
     public ResponseEntity<List<Product>> searchProducts(@RequestParam(required = false) List<String> brands,
                                                         @RequestParam(required = false) List<String> categories,
@@ -118,53 +125,4 @@ public class ProductController {
         }
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-
-
-/*    @GetMapping("/products")
-    public ResponseEntity<List<Product>> searchProducts(
-            @RequestParam(required = false, defaultValue = "") List<String> brand,
-            @RequestParam(required = false, defaultValue = "") List<String> category,
-            @RequestParam(required = false, defaultValue = "") List<String> gender) {
-        List<Product> products = new ArrayList<>();
-        if (!brand.isEmpty()){
-            if (!category.isEmpty()){
-                if (!gender.isEmpty()){
-                    products = productService.searchBrandCategoryGender(brand,category,gender);
-                }
-                else{
-                    products = productService.searchBrandsCategory(brand,category);
-                }
-            }
-            else {
-                if (!gender.isEmpty()){
-                    products = productService.searchBrandsGender(brand,gender);
-                }
-                else {
-                    products = productService.searchBrands(brand);
-                }
-            }
-        }
-        else
-        {
-            if (!category.isEmpty()){
-                if (!gender.isEmpty()){
-                    products = productService.searchCategoryGender(category,gender);
-                }
-                else {
-                    products = productService.searchCategory(category);
-                }
-            }
-            else {
-                products = productService.searchGender(gender);
-            }
-        }
-
-        System.out.println("brand " + brand);
-        System.out.println("category= " + category);
-        System.out.println("gender= " + gender);
-        if (products.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }*/
 }

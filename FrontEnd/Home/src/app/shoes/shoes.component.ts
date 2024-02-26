@@ -52,15 +52,17 @@ export class ShoesComponent {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder) { 
+
       this.selectedColors = new Array(this.colors.length).fill(false);
       this.selectedSize = new Array(this.shoeSizes.length).fill(false);
+      
       this.gender = this.formBuilder.group({
         men: false,
         women: false,
-        unisex: false
+        unisex: false,
+        boys: false,
+        girls: false,
       });
-  
-      // Subscribe to valueChanges observable
       this.gender.valueChanges.subscribe(value => {
         this.logSelectedToppings(value);
       });
@@ -69,16 +71,21 @@ export class ShoesComponent {
 
     gender: FormGroup;
     selectedGenders: string[] = [];
+
+    selectedBrands: string[] = [];
+
+    selectedCategory: string[] = [];
+
+
     logSelectedToppings(value: any) {
       const selectedGenders: string[] = [];
       Object.keys(value).forEach(key => {
         if (value[key]) {
-          // console.log(key);
           selectedGenders.push(key);
         }
       });
       this.selectedGenders=selectedGenders;
-      console.log(this.selectedGenders);
+      this.getAllProduct();
     }
 
 
@@ -116,10 +123,10 @@ export class ShoesComponent {
     }
   }
 
+
   public getAllProduct(category: string = "", subcategory: string = "", subsubcategory: string = "") {
     this.products = [];
-    // this.productService.getProductByCategory("shoes")
-    this.productService.getProducts([""],["shoes","clothes"],["","women"])
+    this.productService.getProducts(this.selectedBrands,this.selectedCategory,this.selectedGenders)
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )

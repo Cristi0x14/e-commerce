@@ -32,7 +32,9 @@ public interface ProductDao extends CrudRepository<Product,Integer> {
         long totalProducts = countByProductNameContainingIgnoreCaseOrProductNameContainingIgnoreCaseOrProductNameContainingIgnoreCase(key1, key2,key3);
         return (int) Math.ceil((double) totalProducts / pageSize);
     }
+/*
     List<Product> findByBrandIgnoreCaseInAndCategoryIgnoreCaseInAndColorIgnoreCaseInAndSizeIgnoreCaseInAndGenderIgnoreCaseIn(List<String> brand,List<String> category,List<String> color,List<String> size,List<String> gender);
+*/
 
     List<Product> findByBrandIgnoreCaseIn(List<String> brands);
     List<Product> findByCategoryIgnoreCaseIn(List<String> category);

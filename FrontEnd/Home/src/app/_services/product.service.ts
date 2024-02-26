@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from 'src/_model/product.model';
 import { Observable, throwError } from 'rxjs';
@@ -19,7 +19,7 @@ export class ProductService {
           return throwError(error);
         })
       );
-  }
+}
 
   public getAllProducts(pageNumber: number, searchKeyword1: String, searchKeyword2: String, searchKeyword3: String): Observable<Product[]> {
     return this.httpClient.get<Product[]>("http://localhost:8081/getAllProducts?pageNumber=" + pageNumber + "&searchKey1=" + searchKeyword1+ "&searchKey2=" + searchKeyword2+ "&searchKey3=" + searchKeyword3)

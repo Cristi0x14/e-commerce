@@ -2,62 +2,90 @@
     <div class="card p-3">
         <div class="row">
             <div class="col-6">
-                <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
+                <form #productForm="ngForm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Name</mat-label>
-                        <input matInput placeholder="Product Name"
-                         [(ngModel)]="product.productName" 
-                         name="productName">
+                        <input matInput placeholder="Product Name" [(ngModel)]="product.productName" name="productName">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Description</mat-label>
-                        <input matInput placeholder="Product Description"
-                        [(ngModel)]="product.productDescription" 
-                         name="productDescription">
+                        <input matInput placeholder="Product Description" [(ngModel)]="product.productDescription"
+                            name="productDescription">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Actual Price</mat-label>
-                        <input matInput placeholder="Product Actual Price"
-                        [(ngModel)]="product.productActualPrice" 
-                         name="productActualPrice">
+                        <input matInput placeholder="Product Actual Price" [(ngModel)]="product.productActualPrice"
+                            name="productActualPrice">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Discounted Price</mat-label>
                         <input matInput placeholder="Product Discounted Price"
-                        [(ngModel)]="product.productDiscountedPrice" 
-                         name="productDiscountedPrice">
+                            [(ngModel)]="product.productDiscountedPrice" name="productDiscountedPrice">
                     </mat-form-field>
 
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Category</mat-label>
+                        <input matInput placeholder="Category" [(ngModel)]="product.category" name="Category">
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Brand</mat-label>
+                        <input matInput placeholder="Brand" [(ngModel)]="product.brand" name="Brand">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Gender</mat-label>
+                        <input matInput placeholder="Gender" [(ngModel)]="product.gender" name="Gender">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Color</mat-label>
+                        <input matInput placeholder="Color" [(ngModel)]="currentColor" name="currentColor">
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Size</mat-label>
+                        <input matInput placeholder="Size" [(ngModel)]="currentSize" name="currentSize">
+                    </mat-form-field>
+                    
+                    <button mat-raised-button color="primary" (click)="addColorSize()">Add Color and Size</button>
+                    
+                    Display added colors and sizings
+                    <div *ngFor="let colorSize of product.colorSizes; let i = index">
+                        <p>{{ colorSize.color }} - {{ colorSize.sizes }}</p>
+                        <button mat-icon-button color="warn" (click)="removeColorSize(i)">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </div>
                     <div class="button-container"
                         style="display: flex; flex-direction: row; justify-content: flex-end;">
                         <button mat-stroked-button color="primary" style="margin-right: 3px;">Clear</button>
-                        <button type="submit" mat-stroked-button color="primary">Add Product</button>
+                        <button mat-stroked-button color="primary" (click)="addProduct(productForm)">Add Product</button>
                     </div>
                 </form>
+
+                <div class="test">
+                    <button mat-stroked-button color="primary" (click)="TestProduct()">Add Test Product</button>
+                </div>
+
+
             </div>
             <div class="col-6">
                 <div>
 
-                    <div class="dropzone" 
-                        appDrag
-                        (files)="fileDropped($event)"
-                    >
+                    <div class="dropzone" appDrag (files)="fileDropped($event)">
                         <div class="text-wraper">
                             <div class="centered">
-                                Drag & Drop / 
+                                Drag & Drop /
                                 <a (click)="selectFile.click()" class="button">Add File</a>
                             </div>
                         </div>
                     </div>
 
-                    <input type="file" 
-                        style="display: none"
-                        multiple 
-                        value="select" 
-                        #selectFile
+                    <input type="file" style="display: none" multiple value="select" #selectFile
                         (change)="onFileSelected($event)">
                 </div>
                 <div class='mt-5'>

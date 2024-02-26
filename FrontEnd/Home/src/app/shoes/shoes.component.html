@@ -24,6 +24,28 @@
     <div class="content p-3">
 
         <div class="side-menu">
+
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Brand
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div >
+                        <section style="display: flex; flex-direction: column;">
+                            <mat-checkbox formControlName="boys" color="primary">
+                                Nike
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="girls" color="primary">
+                                Adidas
+                            </mat-checkbox>
+                        </section>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+
             <div class="filter">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -31,7 +53,7 @@
                             Gender
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-
+                    
                     <div [formGroup]="gender">
                         <section style="display: flex; flex-direction: column;">
                             <mat-checkbox formControlName="men" color="primary">
@@ -56,13 +78,15 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <div style="display: flex; flex-direction: column;">
-                        <mat-checkbox color="primary">
-                            Boys
-                        </mat-checkbox>
-                        <mat-checkbox color="primary">
-                            Girls
-                        </mat-checkbox>
+                    <div [formGroup]="gender">
+                        <section style="display: flex; flex-direction: column;">
+                            <mat-checkbox formControlName="boys" color="primary">
+                                Boys
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="girls" color="primary">
+                                Girls
+                            </mat-checkbox>
+                        </section>
                     </div>
                 </mat-expansion-panel>
             </div>

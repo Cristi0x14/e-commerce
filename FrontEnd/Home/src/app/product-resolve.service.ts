@@ -11,34 +11,37 @@ export class ProductResolveService implements Resolve<Product> {
 
   constructor(
     private productService: ProductService,
-    private imageProcessingService : ImageProcessingService
+    private imageProcessingService: ImageProcessingService
   ) { }
   resolve(
-    route: ActivatedRouteSnapshot, 
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-    ):  Observable<Product> 
-    {
+  ): Observable<Product> {
     const id = route.paramMap.get("productId");
-    if(id){
-       return this.productService.getProductDetailsById(parseInt(id))
-       .pipe(
-        map(p => this.imageProcessingService.createImages(p))
-       );
+    if (id) {
+      return this.productService.getProductDetailsById(parseInt(id))
+        .pipe(
+          map(p => this.imageProcessingService.createImages(p))
+        );
     }
     else {
       return of(this.getProductDetails());
     }
   }
 
-  getProductDetails(){
-      return {
-        productId: "",
-        productName: "",
-        productDescription: "",
-        productDiscountedPrice: 0,
-        productActualPrice: 0,
-        productImages: [],
-      };
-    }
+  getProductDetails() {
+    return {
+      productId: "",
+      productName: "",
+      productDescription: "",
+      productDiscountedPrice: 0,
+      productActualPrice: 0,
+      category:"",
+      brand:"",
+      gender:"",
+      productImages: [],
+      colorSizes: []
+    };
   }
+}
 

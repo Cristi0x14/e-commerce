@@ -7,6 +7,7 @@ import com.example.restapi.configuration.JwtRequestFilter;
 import com.example.restapi.dao.*;
 import com.example.restapi.entity.Cart;
 import com.example.restapi.entity.Product;
+import com.example.restapi.entity.ProductVariation;
 import com.example.restapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -122,5 +123,30 @@ public class ProductService {
     private ProductRepository productRepository;
     public List<Product> searchProducts(List<String> brands, List<String> categories, List<String> colors, List<String> sizes, List<String> genders) {
         return productRepository.findAll(new ProductSpecification(brands, categories, colors, sizes, genders));
+    }
+
+
+
+
+
+
+
+    public Product getProductById(Integer productId) {
+        // Implement the logic to retrieve the product from the repository by its ID
+        // For example:
+         return productDao.findById(productId).orElse(null);
+    }
+
+    // Method to update a product
+    public Product updateProduct(Product product) {
+        // Implement the logic to update the product in the repository
+        // For example:
+        return productRepository.save(product);
+    }
+
+    @Autowired
+    private ProductVariationDao productVariationDao;
+    public ProductVariation addProductVariation(ProductVariation productVariation){
+        return productVariationDao.save(productVariation);
     }
 }

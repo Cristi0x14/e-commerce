@@ -1,9 +1,7 @@
 package com.example.restapi.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Product {
@@ -18,33 +16,15 @@ public class Product {
     private String category;
     private String brand;
     private String gender;
-    private String color;
-    private String size;
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "product_images",
-    joinColumns = {
-            @JoinColumn(name = "product_id")
-    },
-    inverseJoinColumns = {
-            @JoinColumn(name = "image_id")
-    }
+            joinColumns = {
+                    @JoinColumn(name = "product_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "image_id")
+            }
     )
     private Set<ImageModel> productImages;
 
