@@ -99,8 +99,8 @@ export class ShoesComponent {
 
     selectedCategory: string[] = ["shoes"];
 
-    selectedSizeString : string [] = ["45","44"];
-    selectedColorString : string [] = ["red","white"];
+    selectedSizeString : string [] = [];
+    selectedColorString : string [] = [];
 
 
     GenderFilterChange(value: any) {

@@ -125,7 +125,6 @@ public class ProductService {
 
         for (Product product : products) {
             boolean matchFound = false;
-
             if (!desiredColors.isEmpty() && !desiredSizes.isEmpty()) {
 
                 List<ProductVariation> variations = productVariationDao.findByProductId(product.getProductId());
@@ -138,13 +137,16 @@ public class ProductService {
                         availableSizes.addAll(Arrays.asList(variation.getSizes().toLowerCase().split(",")));
                         availableColors.addAll(Arrays.asList(variation.getColor().toLowerCase().split(",")));
                     }
-                    
+
                     if (!Collections.disjoint(availableSizes, desiredSizes) && !Collections.disjoint(availableColors, desiredColors)) {
                         matchFound = true;
                     }
                 }
-            }
 
+            }
+            else{
+                return products;
+            }
             if (matchFound) {
                 filterProducts.add(product);
             }
