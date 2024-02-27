@@ -5,7 +5,7 @@ import { map } from 'rxjs';
 import { ImageProcessingService } from '../image-processing.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Form, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -38,8 +38,7 @@ export class ShoesComponent {
   shoeSizes: number[] = [
     33.5, 34, 35, 35.5, 36, 36.5, 37.5, 38, 38.5, 39,
     40, 40.5, 41, 42, 42.5, 43, 44, 44.5, 45, 45.5,
-    46, 47, 47.5, 48, 48.5, 49, 49.5, 50, 50.5, 51.5,
-    52.5
+    46, 47
   ];
 
   selectedSize: boolean[] = [];
@@ -56,28 +55,55 @@ export class ShoesComponent {
       this.selectedColors = new Array(this.colors.length).fill(false);
       this.selectedSize = new Array(this.shoeSizes.length).fill(false);
       
-      this.gender = this.formBuilder.group({
+      this.genderForm = this.formBuilder.group({
         men: false,
         women: false,
         unisex: false,
         boys: false,
         girls: false,
       });
-      this.gender.valueChanges.subscribe(value => {
-        this.logSelectedToppings(value);
+
+      this.categoryForm = this.formBuilder.group({
+        shoes:true,
+        clothes:false,
+        gym:false,
       });
+
+      this.brandForm = this.formBuilder.group({
+        nike:false,
+        adidas:false,
+      });
+
+      this.genderForm.valueChanges.subscribe(value => {
+        this.GenderFilterChange(value);
+      });
+
+      this.categoryForm.valueChanges.subscribe(value => {
+        this.CategoryFilterChange(value);
+      });
+
+      this.brandForm.valueChanges.subscribe(value => {
+        this.BrandFilterChange(value);
+      });
+
     }
 
 
-    gender: FormGroup;
+    genderForm: FormGroup;
+    categoryForm: FormGroup;
+    brandForm: FormGroup;
+
     selectedGenders: string[] = [];
 
     selectedBrands: string[] = [];
 
-    selectedCategory: string[] = [];
+    selectedCategory: string[] = ["shoes"];
+
+    selectedSizeString : string [] = ["45","44"];
+    selectedColorString : string [] = ["red","white"];
 
 
-    logSelectedToppings(value: any) {
+    GenderFilterChange(value: any) {
       const selectedGenders: string[] = [];
       Object.keys(value).forEach(key => {
         if (value[key]) {
@@ -88,6 +114,27 @@ export class ShoesComponent {
       this.getAllProduct();
     }
 
+    CategoryFilterChange(value: any) {
+      const selectedCategory: string[] = [];
+      Object.keys(value).forEach(key => {
+        if (value[key]) {
+          selectedCategory.push(key);
+        }
+      });
+      this.selectedCategory=selectedCategory;
+      this.getAllProduct();
+    }
+
+    BrandFilterChange(value: any) {
+      const selectedBrands: string[] = [];
+      Object.keys(value).forEach(key => {
+        if (value[key]) {
+          selectedBrands.push(key);
+        }
+      });
+      this.selectedBrands=selectedBrands;
+      this.getAllProduct();
+    }
 
   ngOnInit(): void {
     this.products = [];
@@ -95,7 +142,7 @@ export class ShoesComponent {
       this.category = params['category'] || '';
       this.subcategory = params['subcategory'] || '';
       this.subsubcategory = params['subsubcategory'] || '';
-      this.getAllProduct(this.category, this.subcategory, this.subsubcategory);
+      this.getAllProduct();
     });
     this.updateBreakpoint(window.innerWidth);
     this.getPageCount(12, this.category, this.subcategory, this.subsubcategory);
@@ -124,9 +171,9 @@ export class ShoesComponent {
   }
 
 
-  public getAllProduct(category: string = "", subcategory: string = "", subsubcategory: string = "") {
+  public getAllProduct() {
     this.products = [];
-    this.productService.getProducts(this.selectedBrands,this.selectedCategory,this.selectedGenders)
+    this.productService.getProducts(this.selectedBrands,this.selectedCategory,this.selectedGenders,this.selectedColorString,this.selectedSizeString)
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )
@@ -155,7 +202,7 @@ export class ShoesComponent {
     this.category = searchKeyword;
     this.pageNumber = 0;
     this.products = [];
-    this.getAllProduct(this.category, this.subcategory, this.subsubcategory);
+    this.getAllProduct();
   }
 
   getDiscount(productActualPrice: number, productDiscountedPrice: number) {
@@ -174,14 +221,14 @@ export class ShoesComponent {
       return;
     }
     this.pageNumber = this.pageNumber - 1;
-    this.getAllProduct(this.category, this.subcategory, this.subsubcategory);
+    this.getAllProduct();
   }
   pageForward() {
     if (this.pageNumber>= this.pageCount) {
       return;
     }
     this.pageNumber = this.pageNumber + 1;
-    this.getAllProduct(this.category, this.subcategory, this.subsubcategory);
+    this.getAllProduct();
   }
 
   populateDropdown(): void {
@@ -202,6 +249,6 @@ export class ShoesComponent {
 
   onSelectionChange(event: any): void {
     this.pageNumber =+ event.target.value;
-    this.getAllProduct(this.category,this.subcategory,this.subsubcategory);
+    this.getAllProduct();
   }
 }

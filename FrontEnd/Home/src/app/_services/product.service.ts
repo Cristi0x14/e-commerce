@@ -30,8 +30,8 @@ export class ProductService {
       );
   }
 
-  public getProducts(brands: String[],categories: String[],genders: String[]): Observable<Product[]> {
-    return this.httpClient.get<Product[]>("http://localhost:8081/products?brands=" + brands + "&categories=" + categories +"&genders=" + genders)
+  public getProducts(brands: String[],categories: String[],genders: String[],colors: String[],sizes: String[]): Observable<Product[]> {
+    return this.httpClient.get<Product[]>("http://localhost:8081/products?brands=" + brands + "&categories=" + categories +"&genders=" + genders + "&colors=" + colors + "&sizes=" + sizes)
       .pipe(
         catchError((error: any) => {
           return throwError(error);

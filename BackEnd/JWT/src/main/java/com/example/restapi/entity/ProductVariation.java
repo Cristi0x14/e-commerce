@@ -16,11 +16,11 @@ public class ProductVariation {
     private String Sizes;
 
     public ProductVariation(Integer id, Integer productId, String productName, String color, String sizes) {
-        Id = id;
+        this.Id = id;
         this.productId = productId;
         this.productName = productName;
-        Color = color;
-        Sizes = sizes;
+        this.Color = color;
+        this.Sizes = sizes;
     }
 
     public ProductVariation() {

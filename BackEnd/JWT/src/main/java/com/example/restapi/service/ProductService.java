@@ -1,6 +1,5 @@
 package com.example.restapi.service;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.restapi.configuration.JwtRequestFilter;
@@ -88,12 +87,6 @@ public class ProductService {
         return productDao.findByCategory(category);
     }
 
-
-/*    public List<Product> searchProducts(List<String> brands, List<String> types, List<String> colors, List<String> sizes, List<String> genders) {
-        // Implement your logic to search for products based on the provided parameters
-        return productDao.findByBrandIgnoreCaseInAndCategoryIgnoreCaseInAndColorIgnoreCaseInAndSizeIgnoreCaseInAndGenderIgnoreCaseIn(brands, types, colors, sizes, genders);
-    }*/
-
     public List<Product> searchBrands(List<String> brands){
         return productDao.findByBrandIgnoreCaseIn(brands);
     }
@@ -117,33 +110,55 @@ public class ProductService {
     public List<Product> searchBrandCategoryGender(List<String> brand,List<String> category,List<String> gender){
         return productDao.findByBrandIgnoreCaseInAndCategoryIgnoreCaseInAndGenderIgnoreCaseIn(brand,category,gender);
     }
-
-
     @Autowired
     private ProductRepository productRepository;
+
     public List<Product> searchProducts(List<String> brands, List<String> categories, List<String> colors, List<String> sizes, List<String> genders) {
-        return productRepository.findAll(new ProductSpecification(brands, categories, colors, sizes, genders));
+        List<Product> products = productRepository.findAll(new ProductSpecification(brands, categories, genders));
+        List<Product> filterProducts = new ArrayList<>();
+
+        Set<String> desiredSizes = new HashSet<>(sizes.size());
+        Set<String> desiredColors = new HashSet<>(colors.size());
+
+        sizes.forEach(size -> desiredSizes.add(size.toLowerCase()));
+        colors.forEach(color -> desiredColors.add(color.toLowerCase()));
+
+        for (Product product : products) {
+            boolean matchFound = false;
+
+            if (!desiredColors.isEmpty() && !desiredSizes.isEmpty()) {
+
+                List<ProductVariation> variations = productVariationDao.findByProductId(product.getProductId());
+
+                if (variations != null && !variations.isEmpty()) {
+                    Set<String> availableSizes = new HashSet<>();
+                    Set<String> availableColors = new HashSet<>();
+
+                    for (ProductVariation variation : variations) {
+                        availableSizes.addAll(Arrays.asList(variation.getSizes().toLowerCase().split(",")));
+                        availableColors.addAll(Arrays.asList(variation.getColor().toLowerCase().split(",")));
+                    }
+                    
+                    if (!Collections.disjoint(availableSizes, desiredSizes) && !Collections.disjoint(availableColors, desiredColors)) {
+                        matchFound = true;
+                    }
+                }
+            }
+
+            if (matchFound) {
+                filterProducts.add(product);
+            }
+        }
+
+        return filterProducts;
     }
 
-
-
-
-
-
-
-    public Product getProductById(Integer productId) {
-        // Implement the logic to retrieve the product from the repository by its ID
-        // For example:
+     public Product getProductById(Integer productId) {
          return productDao.findById(productId).orElse(null);
     }
-
-    // Method to update a product
     public Product updateProduct(Product product) {
-        // Implement the logic to update the product in the repository
-        // For example:
         return productRepository.save(product);
     }
-
     @Autowired
     private ProductVariationDao productVariationDao;
     public ProductVariation addProductVariation(ProductVariation productVariation){

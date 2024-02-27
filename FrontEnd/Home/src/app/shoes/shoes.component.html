@@ -29,16 +29,40 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
+                            Category
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    
+                    <div [formGroup]="categoryForm">
+                        <section style="display: flex; flex-direction: column;">
+                            <mat-checkbox formControlName="shoes" color="primary">
+                                Shoes
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="clothes" color="primary">
+                                Clothes
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="gym" color="primary">
+                                Gym
+                            </mat-checkbox>
+                        </section>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+
+            <div class="filter">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
                             Brand
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <div >
+                    <div [formGroup]="brandForm">
                         <section style="display: flex; flex-direction: column;">
-                            <mat-checkbox formControlName="boys" color="primary">
+                            <mat-checkbox formControlName="nike" color="primary">
                                 Nike
                             </mat-checkbox>
-                            <mat-checkbox formControlName="girls" color="primary">
+                            <mat-checkbox formControlName="adidas" color="primary">
                                 Adidas
                             </mat-checkbox>
                         </section>
@@ -54,7 +78,7 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     
-                    <div [formGroup]="gender">
+                    <div [formGroup]="genderForm">
                         <section style="display: flex; flex-direction: column;">
                             <mat-checkbox formControlName="men" color="primary">
                                 Men
@@ -78,7 +102,7 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <div [formGroup]="gender">
+                    <div [formGroup]="genderForm">
                         <section style="display: flex; flex-direction: column;">
                             <mat-checkbox formControlName="boys" color="primary">
                                 Boys
