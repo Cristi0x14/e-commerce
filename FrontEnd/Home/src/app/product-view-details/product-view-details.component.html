@@ -1,5 +1,5 @@
-<div class="contrainer mt-5" style="margin: 30px;">
-    <div class="row">
+<div class="contrainer p-1">
+    <div class="row mt-5" style="margin: 20rem;">
         <div class="col-6">
             <div class="card image-container p-3">
                 <img [src]="product.productImages[selectedProductIndex].url" alt="" class="product-zoom-image">
@@ -15,22 +15,44 @@
 
         </div>
 
-        <div class="col-6">
+        <div class="col-6" style="padding-left: 5rem;">
             <div class="product-information">
                 <div>
                     <div class="mt-3">
-                        <h2>{{product.productName}}</h2>
+                        <h1><b>{{product.productName}}</b></h1>
+                        <span>{{product.gender}} {{product.category}}</span>
                         <br>
                     </div>
-                    <div class="mt-3">
-                        Description :
-                        <br>
-                        {{product.productDescription}}
-                    </div>
-                    <div class="mt-3">
-                        <b>{{product.productDiscountedPrice}} Lei</b>
+                    <div class="mt-5 price">
+                        <b>{{product.productDiscountedPrice}} $</b>
                         &nbsp;&nbsp;
-                        <b style="text-decoration: line-through;">{{product.productActualPrice}} Lei</b>
+                        <b style="text-decoration: line-through;">{{product.productActualPrice}} $</b>
+                    </div>
+
+                    <div class="mt-5">
+                        <span>Selecor Color</span>
+                        <div class="shoe-colors">
+                            <div class="row" *ngFor="let row of colorRows" >
+                              <div class="color" *ngFor="let color of row">
+                                {{ color }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>Select Size</span>
+                        <div class="shoe-sizes">
+                            <div class="row" *ngFor="let row of sizeRows" >
+                              <div class="size" *ngFor="let size of row">
+                                {{ size }}
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                    <div class="mt-3">
+                        {{product.productDescription}}
                     </div>
                     <div class="mt-5 text-center">
                         <button mat-raised-button color="warn" style="width: 200px;"

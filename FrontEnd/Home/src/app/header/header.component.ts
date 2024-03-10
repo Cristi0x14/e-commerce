@@ -11,7 +11,6 @@ import { SearchPopupComponent } from '../search-popup/search-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { CategoryTabComponent } from '../category-tab/category-tab.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 @Component({
@@ -156,13 +155,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  openCategoryDialog() {
+/*   openCategoryDialog() {
     const dialogRef = this.dialog.open(CategoryTabComponent, {
       // Set the width of the dialog
       position: { left: '0' }, // Position the dialog to pop up from the right side
       hasBackdrop: true, // Enable the backdrop
       backdropClass: 'custom-backdrop' // Custom class for the backdrop without gray scale
     });
-  }
+  } */
+
 }
 

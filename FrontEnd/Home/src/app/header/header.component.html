@@ -1,4 +1,12 @@
-<mat-toolbar class="header" color="primary" style="padding-left: 0px; border-bottom: solid 3px #2D3250 ;">
+<div class="top-header">
+  <span>Free Shiping with EasyBOX</span>
+  <div class="space-buttons"></div>
+  <span>Free Shiping for orders over 99 $</span>
+  <div class="space-buttons"></div>
+  <span>Shiping in 3-4 days</span>
+</div>
+
+<mat-toolbar class="header" color="primary">
 
   <div id="logo">
     <a routerLink="/allsports" style="text-decoration: none; color: white;">
@@ -7,34 +15,31 @@
   </div>
 
 
-  <div class="category">
-    <button mat-raised-button (click)="openCategoryDialog()" class="category-button">
-      <div class="icon"><mat-icon style="padding-top: 4px;">store</mat-icon><span>Products</span></div>
-    </button>
+
+  <div class="menu">
+    <app-menu></app-menu>
   </div>
 
-  <span class="space-buttons"></span>
 
+  <div class="space-buttons"></div>
 
   <div class="search-bar">
     <fa-icon [icon]="searchIcon" style='font-size:24px'></fa-icon>&nbsp;
     <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput name="searchKey" id="searchKey"
-      placeholder="Search any product" style="border-radius: 5px; width: 500px; text-align: center;">
+      placeholder="Search any product">
   </div>
-
-
-
-  <span class="space-buttons"></span>
-
   <div class="actions">
 
     <fa-icon [icon]="UserIcon" style='font-size:24px' (click)="toggleDropdown($event)" #userIcon></fa-icon>
     <fa-icon [icon]="heartIcon" style='font-size:24px' routerLink="/"></fa-icon>
+    <!-- 
     <fa-icon [icon]="roadIcon" style='font-size:24px' routerLink="/"></fa-icon>
-    <fa-icon [icon]="locationIcon" style='font-size:24px' routerLink="/"></fa-icon>
+    <fa-icon [icon]="locationIcon" style='font-size:24px' routerLink="/"></fa-icon> 
+    -->
     <fa-icon [icon]="CartIcon" style='font-size:24px' routerLink="/cart"></fa-icon>
 
-    <div class="sub-menu-wrap" *ngIf="showDropdown && userIconClicked">
+
+    <div class="sub-menu-wrap" *ngIf="showDropdown && userIconClicked" align="right">
       <div class="sub-menu">
         <hr>
         <a href="" class="sub-menu-link">
@@ -69,7 +74,6 @@
       </div>
     </div>
   </div>
-  <span class="space-buttons"></span>
 </mat-toolbar>
 
 <mat-toolbar class="admin-toolbar" *ngIf="isLoggedIn() && isAdmin()">

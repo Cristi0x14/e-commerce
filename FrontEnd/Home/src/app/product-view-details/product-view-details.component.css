@@ -1,11 +1,13 @@
-.product-information{
+.product-information {
     font-size: medium;
 }
-.image-container{
+
+.image-container {
     position: relative;
     height: 400px;
 }
-.product-zoom-image{
+
+.product-zoom-image {
     max-width: 90%;
     max-height: 90%;
     position: absolute;
@@ -14,4 +16,45 @@
     left: 0;
     right: 0;
     margin: auto;
+}
+
+.price {
+    font-size: 1.3rem;
+}
+
+.shoe-sizes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shoe-colors {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.size {
+    flex: 1 0 30%;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.66rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.color {
+    flex: 1 0 30%;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.66rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
 }

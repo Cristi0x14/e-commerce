@@ -1,1 +1,6 @@
-<p>category works!</p>
+<div class="category">
+    <h3>{{ category.name }}</h3>
+    <ul class="subcategory">
+        <li *ngFor="let subcategory of category.subcategories">{{ subcategory }}</li>
+    </ul>
+</div>

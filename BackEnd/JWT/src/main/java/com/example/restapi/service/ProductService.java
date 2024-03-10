@@ -4,11 +4,9 @@ import java.util.stream.Collectors;
 
 import com.example.restapi.configuration.JwtRequestFilter;
 import com.example.restapi.dao.*;
-import com.example.restapi.entity.Cart;
-import com.example.restapi.entity.Product;
-import com.example.restapi.entity.ProductVariation;
-import com.example.restapi.entity.User;
+import com.example.restapi.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -44,17 +42,6 @@ public class ProductService {
         }
         else{
             return (List<Product>) productDao.findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(searchKey1,searchKey2,pageable);
-        }
-    }
-
-    public List<Product> getAllProducts(int pageNumber, String searchKey1,String searchKey2,String searchKey3){
-
-        Pageable pageable = PageRequest.of(pageNumber,12);
-        if(searchKey1.equals("") && (searchKey2.equals("")) && (searchKey3.equals(""))){
-            return (List<Product>) productDao.findAll(pageable);
-        }
-        else{
-            return (List<Product>) productDao.findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(searchKey1,searchKey2,searchKey3,pageable);
         }
     }
 
@@ -113,8 +100,11 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> searchProducts(List<String> brands, List<String> categories, List<String> colors, List<String> sizes, List<String> genders) {
-        List<Product> products = productRepository.findAll(new ProductSpecification(brands, categories, genders));
+    public FilteredProducts searchProducts(List<String> brands, List<String> categories, List<String> colors, List<String> sizes, List<String> genders, Integer pageNumber, Integer pageSize) {
+
+        Integer productCounter = 0 ;
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        Page<Product> products = productRepository.findAll(new ProductSpecification(brands, categories, genders),pageable);
         List<Product> filterProducts = new ArrayList<>();
 
         Set<String> desiredSizes = new HashSet<>(sizes.size());
@@ -125,7 +115,7 @@ public class ProductService {
 
         for (Product product : products) {
             boolean matchFound = false;
-            if (!desiredColors.isEmpty() && !desiredSizes.isEmpty()) {
+            if (!desiredColors.isEmpty() || !desiredSizes.isEmpty()) {
 
                 List<ProductVariation> variations = productVariationDao.findByProductId(product.getProductId());
 
@@ -138,23 +128,35 @@ public class ProductService {
                         availableColors.addAll(Arrays.asList(variation.getColor().toLowerCase().split(",")));
                     }
 
-                    if (!Collections.disjoint(availableSizes, desiredSizes) && !Collections.disjoint(availableColors, desiredColors)) {
+                    if (!Collections.disjoint(availableSizes, desiredSizes) || !Collections.disjoint(availableColors, desiredColors)) {
                         matchFound = true;
+                        productCounter++;
                     }
                 }
 
             }
             else{
-                return products;
+                return new FilteredProducts(products.getContent(), products.getTotalElements());
             }
             if (matchFound) {
                 filterProducts.add(product);
             }
         }
 
-        return filterProducts;
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filterProducts.size());
+        return new FilteredProducts(filterProducts.subList(start, end), productCounter);
     }
+    public List<Product> getAllProducts(int pageNumber, String searchKey1,String searchKey2,String searchKey3){
 
+        Pageable pageable = PageRequest.of(pageNumber,12);
+        if(searchKey1.equals("") && (searchKey2.equals("")) && (searchKey3.equals(""))){
+            return (List<Product>) productDao.findAll(pageable);
+        }
+        else{
+            return (List<Product>) productDao.findByProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCaseAndProductNameContainingIgnoreCase(searchKey1,searchKey2,searchKey3,pageable);
+        }
+    }
      public Product getProductById(Integer productId) {
          return productDao.findById(productId).orElse(null);
     }

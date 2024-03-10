@@ -1,0 +1,28 @@
+<div class="menu">
+    <div class="header" *ngFor="let category of categories" (mouseenter)="category.expanded = true"
+        (mouseleave)="category.expanded = false">
+        <span class="category" [class.expanded-border]="category.expanded">{{ category.name }}</span>
+
+        <div class="dropdown" *ngIf="category.expanded" [class.active]="category.expanded">
+            <ng-container *ngIf="category.subcategories && category.subcategories.length > 0">
+                <ul class="subcategory" *ngIf="isStringSubcategory(category.subcategories[0])">
+                    <li class="title"
+                    *ngFor="let subcategory of category.subcategories">
+                        <span (click)="goto(subcategory.path)">
+                            {{ subcategory }}
+                        </span> 
+                    </li>
+                </ul>
+                <ul class="subcategory" *ngIf="!isStringSubcategory(category.subcategories[0])">
+                    <li *ngFor="let subcategory of category.subcategories">
+                        {{ subcategory.category }}
+                        <ul>
+                            <li class="title"
+                             *ngFor="let subSubcategory of subcategory.subcategories" (click)="goTo(category.path , subcategory.path)">{{ subSubcategory }}</li>
+                        </ul>
+                    </li>
+                </ul>
+            </ng-container>
+        </div>
+    </div>
+</div>

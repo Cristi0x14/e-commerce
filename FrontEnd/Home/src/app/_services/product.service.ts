@@ -5,6 +5,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { OrderDetails } from 'src/_model/order-details.model';
 import { MyOrderDetails } from 'src/_model/order.model';
+import { FilteredProducts } from 'src/_model/filteredProducts.mode';
+import { ColorSizes } from 'src/_model/colorSize.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +32,16 @@ export class ProductService {
       );
   }
 
-  public getProducts(brands: String[],categories: String[],genders: String[],colors: String[],sizes: String[]): Observable<Product[]> {
-    return this.httpClient.get<Product[]>("http://localhost:8081/products?brands=" + brands + "&categories=" + categories +"&genders=" + genders + "&colors=" + colors + "&sizes=" + sizes)
+  public getProducts(brands: String[], categories: String[], genders: String[], colors: String[], sizes: String[], pageNumber: number, pageSize: number): Observable<Product[]> {
+    return this.httpClient.get<Product[]>("http://localhost:8081/products?pageSize=" + pageSize + "&pageNumber=" + pageNumber+"&brands=" + brands + "&categories=" + categories +"&genders=" + genders + "&colors=" + colors + "&sizes=" + sizes)
+      .pipe(
+        catchError((error: any) => {
+          return throwError(error);
+        })
+      );
+  }
+  public getProductsTotalCount(brands: String[], categories: String[], genders: String[], colors: String[], sizes: String[], pageNumber: number, pageSize: number): Observable<number> {
+    return this.httpClient.get<number>("http://localhost:8081/productsTotalCount?pageSize=" + pageSize + "&pageNumber=" + pageNumber+"&brands=" + brands + "&categories=" + categories +"&genders=" + genders + "&colors=" + colors + "&sizes=" + sizes)
       .pipe(
         catchError((error: any) => {
           return throwError(error);
@@ -50,6 +60,10 @@ export class ProductService {
 
   public getProductDetailsById(productId: number) {
     return this.httpClient.get<Product>("http://localhost:8081/getProductDetailsById/" + productId)
+  }
+  
+  public getProductVariationsById(productId: number): Observable<ColorSizes[]>{
+    return this.httpClient.get<ColorSizes[]>("http://localhost:8081/getProductVariationsById/" + productId)
   }
 
   public deleteProduct(productId: number) {

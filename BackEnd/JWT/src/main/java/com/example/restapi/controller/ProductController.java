@@ -1,11 +1,11 @@
 package com.example.restapi.controller;
 
-import com.example.restapi.entity.ImageModel;
-import com.example.restapi.entity.Product;
-import com.example.restapi.entity.ProductVariation;
+import com.example.restapi.entity.*;
 import com.example.restapi.service.ProductService;
+import com.example.restapi.service.ProductVariationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private ProductVariationService productVariationService;
     @PreAuthorize("hasRole('Admin')")
     @PostMapping(value = {"/product/add"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Product addProduct(@RequestPart("product") Product product,
@@ -99,7 +100,10 @@ public class ProductController {
     public Product getProductDetailsById(@PathVariable("productId") Integer productId){
         return productService.getProductDetailsById(productId);
     }
-
+    @GetMapping({"/getProductVariationsById/{productId}"})
+    public List<ColorSizesDTO> getProductVariationsById(@PathVariable("productId") Integer productId){
+        return productVariationService.getVariationsById(productId);
+    }
     @PreAuthorize("hasRole('Admin')")
     @DeleteMapping({"/deleteProductDetails/{productId}"})
     public void deleteProductDetails(@PathVariable("productId") Integer productId){
@@ -112,17 +116,35 @@ public class ProductController {
                                   @PathVariable(name = "productId") Integer productId){
         return productService.getProductDetails(isSingleProductCheckout,productId);
     }
-
+    //@PreAuthorize("hasRole('User')")
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> searchProducts(@RequestParam(required = false) List<String> brands,
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam(defaultValue = "12") int pageSize,
+                                                        @RequestParam(defaultValue = "0") int pageNumber,
+                                                        @RequestParam(required = false) List<String> brands,
                                                         @RequestParam(required = false) List<String> categories,
                                                         @RequestParam(required = false) List<String> colors,
                                                         @RequestParam(required = false) List<String> sizes,
                                                         @RequestParam(required = false) List<String> genders) {
-        List<Product> products = productService.searchProducts(brands, categories, colors, sizes, genders);
-        if (products.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        FilteredProducts filteredProducts = productService.searchProducts(brands, categories, colors, sizes, genders, pageNumber, pageSize);
+        if (filteredProducts.getProducts().isEmpty()) {
+            return ResponseEntity.noContent().build();
         }
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return ResponseEntity.ok(filteredProducts.getProducts());
     }
+   // @PreAuthorize("hasRole('User')")
+    @GetMapping("/productsTotalCount")
+    public ResponseEntity<Long> searchProductsGetTotalCount(@RequestParam(defaultValue = "12") int pageSize,
+                                                        @RequestParam(defaultValue = "0") int pageNumber,
+                                                        @RequestParam(required = false) List<String> brands,
+                                                        @RequestParam(required = false) List<String> categories,
+                                                        @RequestParam(required = false) List<String> colors,
+                                                        @RequestParam(required = false) List<String> sizes,
+                                                        @RequestParam(required = false) List<String> genders) {
+        FilteredProducts filteredProducts = productService.searchProducts(brands, categories, colors, sizes, genders, pageNumber, pageSize);
+        if (filteredProducts.getProducts().isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(filteredProducts.getTotalCount());
+    }
+
 }
